@@ -66,11 +66,11 @@ public class RecyclerViewDemoApp extends Application {
         return new ArrayList<DemoModel>(demoQueue);
     }
 
-    public static final List<DemoModel> removeItemFromList(int position) {
-        demoData.remove(position);
-        demoMap.remove(demoData.get(position).id);
-        return new ArrayList<DemoModel>(demoData);
-    }
+    //public static final List<DemoModel> removeItemFromList(int position) {
+        //demoData.remove(position);
+        //demoMap.remove(demoData.get(position).id);
+        //return new ArrayList<DemoModel>(demoData);
+    //}
 
     public static DemoModel findById(int id) {
         return demoMap.get(id);
