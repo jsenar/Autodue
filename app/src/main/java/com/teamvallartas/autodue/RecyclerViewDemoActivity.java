@@ -121,9 +121,9 @@ public class RecyclerViewDemoActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-        if (item.getItemId() == R.id.action_remove) {
-            removeItemFromList();
-        }
+        //if (item.getItemId() == R.id.action_remove) {
+            //removeItemFromList();
+        //}
         return true;
     }
 
@@ -145,12 +145,12 @@ public class RecyclerViewDemoActivity
         adapter.addData(model, position);
     }
 
-    private void removeItemFromList() {
+    /*private void removeItemFromList() {
         int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).
                 findFirstCompletelyVisibleItemPosition();
         RecyclerViewDemoApp.removeItemFromList(position);
         adapter.removeData(position);
-    }
+    }*/
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -215,7 +215,7 @@ public class RecyclerViewDemoActivity
     @Override
     public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.menu_delete:
+            /*case R.id.menu_delete:
                 List<Integer> selectedItemPositions = adapter.getSelectedItems();
                 int currPos;
                 for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
@@ -224,7 +224,7 @@ public class RecyclerViewDemoActivity
                     adapter.removeData(currPos);
                 }
                 actionMode.finish();
-                return true;
+                return true;*/
             default:
                 return false;
         }
@@ -275,7 +275,7 @@ public class RecyclerViewDemoActivity
         startActivity(intent);
     }
 
-    private void populateGetEventsBtn() {
+    /*private void populateGetEventsBtn() {
         m_button_getEvents = (Button) findViewById(R.id.button_get_events);
         m_button_getEvents.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,6 +283,6 @@ public class RecyclerViewDemoActivity
                 getLastThreeEvents();
             }
         });
-    }
+    }*/
 }
 
