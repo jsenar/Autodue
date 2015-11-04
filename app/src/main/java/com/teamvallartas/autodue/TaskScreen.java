@@ -3,12 +3,17 @@ package com.teamvallartas.autodue;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
+
+import java.util.Date;
 
 
 /**
@@ -35,11 +40,26 @@ public class TaskScreen extends Activity {
         dropdown.setAdapter(adapter);
     }
 
-    public void hidePopup(View view){
+    public void addTask(View view){
+        //Button button = (Button) findViewById(R.id.button1);
+        DemoModel demo = new DemoModel();
+        demo.label = ((EditText)findViewById(R.id.task_name_message)).getText().toString();
+        demo.description = ((EditText)findViewById(R.id.description_name_message)).getText().toString();
+        String dur = ((EditText)findViewById(R.id.duration_time)).getText().toString();
+        demo.duration = Long.parseLong(  dur , 10) * 1000 * 60 * 60;
+        Event e = Calendar.findTime(demo.duration, new Date(Long.MAX_VALUE), demo.label);
+        if(e == null)
+            Log.d("", "is null");
+        //Log.d("", );
+        Toast.makeText(getApplicationContext(), e.getDescription() + " " + e.getStartTime().toString() + " " + e.getEndTime().toString(), 5000).show();
+//        RecyclerViewDemoApp.addItemToList(demo);
+        RecyclerViewDemoActivity.addItemToList(demo);
+        this.finish();
+    }
+    public void hidePopup(View view) {
         //Button button = (Button) findViewById(R.id.button1);
         this.finish();
     }
-
     public void deselectButton2(View view){
         RadioButton b = (RadioButton) findViewById(R.id.radioButton2);
         b.setChecked(false);

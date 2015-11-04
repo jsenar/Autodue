@@ -169,7 +169,7 @@
         android:text="Done"
         android:id="@+id/button1"
         android:clickable="true"
-        android:onClick="hidePopup"
+        android:onClick="addTask"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/duetime_min"
         android:layout_alignStart="@+id/duetime_min" />
