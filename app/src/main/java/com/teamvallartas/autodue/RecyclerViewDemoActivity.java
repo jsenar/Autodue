@@ -193,10 +193,10 @@ public class RecyclerViewDemoActivity
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
     }
 
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean b) {
-
-    }
+//    @Override
+//    public void onRequestDisallowInterceptTouchEvent(boolean b) {
+//
+//    }
 
     @Override
     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
