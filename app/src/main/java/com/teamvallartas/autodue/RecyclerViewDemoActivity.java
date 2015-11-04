@@ -121,9 +121,10 @@ public class RecyclerViewDemoActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-        //if (item.getItemId() == R.id.action_remove) {
-            //removeItemFromList();
-        //}
+        if (item.getItemId() == R.id.action_refresh) {
+            List<DemoModel> tmpItems = RecyclerViewDemoApp.getDemoData();
+            adapter.swap();
+        }
         return true;
     }
 

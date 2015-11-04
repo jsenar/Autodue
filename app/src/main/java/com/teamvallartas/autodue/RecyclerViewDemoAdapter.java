@@ -51,6 +51,12 @@ public class RecyclerViewDemoAdapter
         notifyItemInserted(position);
     }
 
+    public void swap(){
+        items.clear();
+        items.addAll(demoQueue);
+        notifyDataSetChanged();
+    }
+
     /**
      * Removes the item that currently is at the passed in position from the
      * underlying data set.

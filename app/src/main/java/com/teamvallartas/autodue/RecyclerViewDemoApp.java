@@ -66,6 +66,11 @@ public class RecyclerViewDemoApp extends Application {
         return new ArrayList<DemoModel>(demoQueue);
     }
 
+    public static final void update(){
+        demoData.clear();
+        demoData.addAll(demoQueue);
+    }
+
     //public static final List<DemoModel> removeItemFromList(int position) {
         //demoData.remove(position);
         //demoMap.remove(demoData.get(position).id);
