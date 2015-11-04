@@ -55,6 +55,9 @@ public class RecyclerViewDemoActivity
     ImageButton fab;
     Context mContext;
 
+    //popup items
+
+
     private Button m_button_getEvents;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -126,7 +129,7 @@ public class RecyclerViewDemoActivity
         //}
         return true;
     }
-
+    //TODO model needs to pass in values of the popup
     private void addItemToList() {
         DemoModel model = new DemoModel();
         model.label = "New Task " + itemCount;
@@ -157,6 +160,8 @@ public class RecyclerViewDemoActivity
     public void onClick(View view) {
         if (view.getId() == R.id.fab_add) {
             // fab click
+            startActivity(new Intent(RecyclerViewDemoActivity.this, TaskScreen.class));
+
             addItemToList();
         } else if (view.getId() == R.id.container_list_item) {
             // item click
