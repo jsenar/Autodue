@@ -132,9 +132,9 @@ public class RecyclerViewDemoActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-        //if (item.getItemId() == R.id.action_remove) {
-            //removeItemFromList();
-        //}
+        if (item.getItemId() == R.id.action_refresh) {
+            adapter.sort();
+        }
         return true;
     }
     //TODO model needs to pass in values of the popup
