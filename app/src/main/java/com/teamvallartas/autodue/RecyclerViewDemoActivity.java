@@ -31,15 +31,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import static android.view.GestureDetector.SimpleOnGestureListener;
 
@@ -210,10 +209,10 @@ public class RecyclerViewDemoActivity
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
     }
 
-//    @Override
-//    public void onRequestDisallowInterceptTouchEvent(boolean b) {
-//
-//    }
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean b) {
+
+    }
 
     @Override
     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
