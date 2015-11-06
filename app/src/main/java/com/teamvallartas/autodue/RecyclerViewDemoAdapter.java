@@ -89,6 +89,7 @@ public class RecyclerViewDemoAdapter
                 model.dateTime.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
         viewHolder.dateTime.setText(dateStr);
+        viewHolder.priorityText.setText("Priority: " + model.priority);
         viewHolder.itemView.setActivated(selectedItems.get(position, false));
     }
 
@@ -127,11 +128,13 @@ public class RecyclerViewDemoAdapter
     public final static class ListItemViewHolder extends RecyclerView.ViewHolder {
         TextView label;
         TextView dateTime;
+        TextView priorityText;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.txt_label_item);
             dateTime = (TextView) itemView.findViewById(R.id.txt_date_time);
+            priorityText = (TextView) itemView.findViewById(R.id.txt_priority);
         }
     }
 }

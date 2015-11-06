@@ -2,46 +2,46 @@
 <items version="2" >
 
     <item
-        jar="/home/john/projects/Autodue/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.1/jars/classes.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="39ae02ce40c3ac828abbf780ce0ff5d7a28b7d6a">
-        <dex dex="/home/john/projects/Autodue/app/build/intermediates/pre-dexed/debug/classes-fb3c3d85cac0b42683b28478a96edd9a764abd25.jar" />
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\classes-c04cc4decc17ccce4c64229b6a1e71c40ac7ad97.jar" />
     </item>
     <item
-        jar="/home/john/projects/Autodue/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/home/john/projects/Autodue/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-daeb6aa587ab1cc2b5ebac3f98816d64415ac7ee.jar" />
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\classes-04ea224b2beefb8093c44157a837562299a3f495.jar" />
     </item>
     <item
-        jar="/home/john/projects/Autodue/app/build/intermediates/exploded-aar/net.danlew/android.joda/2.4.0/jars/classes.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\net.danlew\android.joda\2.4.0\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="fbf3f2e9e9eb8c9aeb41977952ceb5f613c4baf1">
-        <dex dex="/home/john/projects/Autodue/app/build/intermediates/pre-dexed/debug/classes-b70b44a07974463fc282ecf2c8d0fbb19fc81f75.jar" />
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\classes-b61f2d2db3bb18e57f59b452f8ff848fbe78b62b.jar" />
     </item>
     <item
-        jar="/home/john/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/home/john/projects/Autodue/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-b0a1e027d312d1c2f61a9187da8f710b328950e9.jar" />
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-cadd3ff41be95cde3d42b15a1df9d8f9c6262ef9.jar" />
     </item>
     <item
-        jar="/home/john/projects/Autodue/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/home/john/projects/Autodue/app/build/intermediates/pre-dexed/debug/classes-00be5edb7cc462d5263347d2521d4afd50cd1a35.jar" />
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\classes-9ead4528f00a4db2a2795181531a883286bcd491.jar" />
     </item>
     <item
-        jar="/home/john/projects/Autodue/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
+        jar="D:\Users\Brandon\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="/home/john/projects/Autodue/app/build/intermediates/pre-dexed/debug/classes-66e4f6cb7b2a20338e475bff4ec802813d4e703d.jar" />
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-cd02af9d79336fbd55b9692c852cf34218fa9968.jar" />
     </item>
 
 </items>

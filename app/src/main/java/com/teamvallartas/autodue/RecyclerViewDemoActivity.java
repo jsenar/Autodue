@@ -3,18 +3,22 @@ package com.teamvallartas.autodue;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.ChangeTransform;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,10 +31,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -46,14 +51,17 @@ public class RecyclerViewDemoActivity
 
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
-
-    RecyclerView recyclerView;
-    RecyclerViewDemoAdapter adapter;
-    int itemCount;
+    com.teamvallartas.autodue.Calendar myCalendar;
+    static RecyclerView recyclerView;
+    static RecyclerViewDemoAdapter adapter;
+    static int itemCount;
     GestureDetectorCompat gestureDetector;
     ActionMode actionMode;
     ImageButton fab;
     Context mContext;
+
+    //popup items
+
 
     private Button m_button_getEvents;
 
@@ -62,9 +70,10 @@ public class RecyclerViewDemoActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        getWindow().setAllowReturnTransitionOverlap(true);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setSharedElementExitTransition(new ChangeTransform());
+        Window win = getWindow();
+        win.setAllowReturnTransitionOverlap(true);
+        win.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        win.setSharedElementExitTransition(new ChangeTransform());
 
         setContentView(R.layout.activity_recyclerview_demo);
         fab = (ImageButton) findViewById(R.id.fab_add);
@@ -107,8 +116,10 @@ public class RecyclerViewDemoActivity
         View fab = findViewById(R.id.fab_add);
         fab.setOnClickListener(this);
 
+        myCalendar = new com.teamvallartas.autodue.Calendar();
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
+
     }
 
     @Override
@@ -126,10 +137,10 @@ public class RecyclerViewDemoActivity
         }
         return true;
     }
-
-    private void addItemToList() {
-        DemoModel model = new DemoModel();
-        model.label = "New Task " + itemCount;
+    //TODO model needs to pass in values of the popup
+    public static void addItemToList(DemoModel model) {
+        //DemoModel model = new DemoModel();
+        //model.label = "New Task " + itemCount;
         Random r = new Random();
         model.priority = r.nextInt(10)+1;
         itemCount++;
@@ -140,9 +151,10 @@ public class RecyclerViewDemoActivity
         // otherwise the view would be inserted before the first
         // visible item; that is outside of the viewable area
         position++;
-
+        //getCalendarEvents();
         RecyclerViewDemoApp.addItemToList(model);
         adapter.addData(model, position);
+
     }
 
     /*private void removeItemFromList() {
@@ -157,7 +169,11 @@ public class RecyclerViewDemoActivity
     public void onClick(View view) {
         if (view.getId() == R.id.fab_add) {
             // fab click
-            addItemToList();
+            getCalendarEvents();
+            startActivity(new Intent(RecyclerViewDemoActivity.this, TaskScreen.class));
+            new Intent(RecyclerViewDemoActivity.this, TaskScreen.class);
+
+            //addItemToList();
         } else if (view.getId() == R.id.container_list_item) {
             // item click
             int idx = recyclerView.getChildPosition(view);
@@ -262,6 +278,19 @@ public class RecyclerViewDemoActivity
         String[] navArray = { "Task List", "Calendar", "Settings"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navArray);
         mDrawerList.setAdapter(mAdapter);
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                if(position == 0){
+                    DrawerLayout mDrawerLayout;
+                    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    mDrawerLayout.closeDrawers();
+                }else if(position == 1){
+                    openCalendar();
+                }
+            }
+        });
 
 
     }
@@ -274,7 +303,86 @@ public class RecyclerViewDemoActivity
         Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
         startActivity(intent);
     }
+    private void getCalendarEvents(){
+        //String DEBUG_TAG = "MyActivity";
+        String[] INSTANCE_PROJECTION = new String[] {
+                CalendarContract.Instances.EVENT_ID,      // 0
+                CalendarContract.Instances.BEGIN,         // 1
+                CalendarContract.Instances.TITLE,          // 2
+                CalendarContract.Instances.END              //3
+        };
 
+// The indices for the projection array above.
+        int PROJECTION_ID_INDEX = 0;
+        int PROJECTION_BEGIN_INDEX = 1;
+       int PROJECTION_TITLE_INDEX = 2;
+        int PROJECTION_END_INDEX = 3;
+// Specify the date range you want to search for recurring
+// event instances
+
+        java.util.Calendar beginTime = java.util.Calendar.getInstance();
+        beginTime.set(1970, 9, 23, 8, 0);
+        long startMillis = beginTime.getTimeInMillis();
+        java.util.Calendar endTime = java.util.Calendar.getInstance();
+        endTime.set(2099, 10, 24, 8, 0);
+        long endMillis = endTime.getTimeInMillis();
+
+        Cursor cur = null;
+        ContentResolver cr = getContentResolver();
+
+// The ID of the recurring event whose instances you are searching
+// for in the Instances table
+        //String selection = CalendarContract.Instances.EVENT_ID + " = ?";
+        //String[] selectionArgs = new String[] {"207"};
+
+// Construct the query with the desired date range.
+
+        Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();
+        ContentUris.appendId(builder, startMillis);
+        ContentUris.appendId(builder, endMillis);
+
+// Submit the query
+        cur =  cr.query(builder.build(),
+                INSTANCE_PROJECTION,
+                null,
+                null,
+                //selection,
+                //selectionArgs,
+                null);
+
+        int i = 0;
+        while (cur.moveToNext()) {
+            i++;
+            String title = null;
+            long eventID = 0;
+            long beginVal = 0;
+            long endVal = 0;
+            // Get the field values
+            eventID = cur.getLong(PROJECTION_ID_INDEX);
+            beginVal = cur.getLong(PROJECTION_BEGIN_INDEX);
+            title = cur.getString(PROJECTION_TITLE_INDEX);
+            endVal = cur.getLong(PROJECTION_END_INDEX);
+            com.teamvallartas.autodue.Calendar.insert(new Event(new Date(beginVal),new Date(endVal),title));
+            // Do something with the values.
+            Log.d("Oh", "Event:  " + title);
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTimeInMillis(beginVal);
+            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            Log.d("Oh", "Date: " + formatter.format(calendar.getTime()));
+        }
+        Log.d("",""+i);
+
+    }
+    public void openCalendar(){
+        long startMillis = new Date().getTime();
+
+        Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+        builder.appendPath("time");
+        ContentUris.appendId(builder, startMillis);
+        Intent intent = new Intent(Intent.ACTION_VIEW)
+                .setData(builder.build());
+        startActivity(intent);
+    }
     /*private void populateGetEventsBtn() {
         m_button_getEvents = (Button) findViewById(R.id.button_get_events);
         m_button_getEvents.setOnClickListener(new View.OnClickListener() {
