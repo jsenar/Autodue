@@ -1,6 +1,7 @@
 package com.teamvallartas.autodue;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,12 +15,16 @@ import android.widget.Toast;
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
 import java.util.Date;
+import android.app.Dialog;
+import android.widget.*;
 
 
 /**
  * Created by evahuynh on 10/30/15.
  */
 public class TaskScreen extends Activity {
+    static final int dialog_id= 0;
+    int hour, minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +39,10 @@ public class TaskScreen extends Activity {
 
         getWindow().setLayout((int) (width), (int) (height));
 
-        Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
+        /*Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
         String[] items = new String[]{"Very Important", "Kinda Important", "Important", "Little Important", "Not Important"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        dropdown.setAdapter(adapter);
+        dropdown.setAdapter(adapter);*/
     }
 
     public void addTask(View view){
@@ -60,7 +65,8 @@ public class TaskScreen extends Activity {
         //Button button = (Button) findViewById(R.id.button1);
         this.finish();
     }
-    public void deselectButton2(View view){
+
+    /* public void deselectButton2(View view){
         RadioButton b = (RadioButton) findViewById(R.id.radioButton2);
         b.setChecked(false);
     }
@@ -68,7 +74,32 @@ public class TaskScreen extends Activity {
     public void deselectButton1(View view){
         RadioButton b = (RadioButton) findViewById(R.id.radioButton1);
         b.setChecked(false);
+    } */
+
+    @SuppressWarnings("deprecation")
+    public void showTimePicker(View view){
+        showDialog(dialog_id);
+
     }
+
+    @SuppressWarnings("deprecation")
+    protected Dialog onCreateDialog(int id){
+        switch(id){
+            case dialog_id: return new TimePickerDialog(this, mTimeSetListener, hour, minute, false);
+        }
+        return null;
+    }
+
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener (){
+        @Override
+        public void onTimeSet (TimePicker view, int hourOfDay, int hour_minute){
+            hour = hourOfDay;
+            minute = hour_minute;
+            Toast.makeText(getBaseContext(), "Settled time: " + hour + " : " + minute, Toast.LENGTH_LONG).show();
+        }
+
+    };
+
 
 
 }

@@ -133,35 +133,15 @@
         android:inputType="time"
         android:ems="10"
         android:id="@+id/duetime_hour"
-        android:layout_below="@+id/duetime_message"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#ffffff"
         android:layout_toStartOf="@+id/textView4"
-        android:layout_toLeftOf="@+id/textView4" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" : "
-        android:id="@+id/colon"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/duetime_hour"
-        android:layout_below="@+id/duetime_message" />
-
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/duetime_min"
-        android:background="#ffffff"
+        android:onClick="showTimePicker"
         android:layout_below="@+id/duetime_message"
-        android:layout_toRightOf="@+id/colon"
-        android:layout_toEndOf="@+id/colon"
-        android:width="60dp" />
+        android:layout_alignRight="@+id/duedate"
+        android:layout_alignEnd="@+id/duedate" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -171,8 +151,8 @@
         android:clickable="true"
         android:onClick="addTask"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/duetime_min"
-        android:layout_alignStart="@+id/duetime_min" />
+        android:layout_toRightOf="@+id/duration_time"
+        android:layout_toEndOf="@+id/duration_time" />
 
     <Button
         android:layout_width="wrap_content"
@@ -180,34 +160,9 @@
         android:text="Cancel"
         android:id="@+id/button2"
         android:onClick="hidePopup"
-        android:layout_marginLeft="34dp"
-        android:layout_marginStart="34dp"
         android:layout_below="@+id/spinner1"
-        android:layout_toRightOf="@+id/button1"
-        android:layout_toEndOf="@+id/button1" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AM"
-        android:id="@+id/radioButton1"
-        android:checked="false"
-        android:onClick="deselectButton2"
-        android:layout_alignBottom="@+id/duetime_min"
-        android:layout_toRightOf="@+id/duetime_min"
-        android:layout_alignTop="@+id/duetime_min" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PM"
-        android:id="@+id/radioButton2"
-        android:checked="false"
-        android:shadowColor="#0d19ef"
-        android:onClick="deselectButton1"
-        android:layout_alignBottom="@+id/radioButton1"
-        android:layout_toRightOf="@+id/radioButton1"
-        android:layout_below="@+id/duetime_message" />
+        android:layout_toRightOf="@+id/duetime_hour"
+        android:layout_toEndOf="@+id/duetime_hour" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -221,10 +176,11 @@
 
     <Spinner
         android:id="@+id/spinner1"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
+        android:background="@color/white"
+        android:popupBackground="#CCFFFF"
+        android:entries="@array/priorities"
         android:layout_above="@+id/button1"
         android:layout_alignLeft="@+id/duration_time"
         android:layout_alignStart="@+id/duration_time"
