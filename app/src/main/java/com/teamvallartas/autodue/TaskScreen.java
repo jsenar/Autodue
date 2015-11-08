@@ -1,6 +1,7 @@
 package com.teamvallartas.autodue;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -37,7 +38,7 @@ public class TaskScreen extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width), (int) (height));
+        getWindow().setLayout((int) (width * 0.95), (int) (height * 0.95));
 
         /*Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
         String[] items = new String[]{"Very Important", "Kinda Important", "Important", "Little Important", "Not Important"};
@@ -95,11 +96,27 @@ public class TaskScreen extends Activity {
         public void onTimeSet (TimePicker view, int hourOfDay, int hour_minute){
             hour = hourOfDay;
             minute = hour_minute;
-            Toast.makeText(getBaseContext(), "Settled time: " + hour + " : " + minute, Toast.LENGTH_LONG).show();
+            String str_hour = ""+hour;
+            String str_min = ""+minute;
+            if( hour < 10 )
+                str_hour = "0" + hour;
+            if( minute < 10 )
+                str_min = "0" + minute;
+
+            String settledTime = str_hour + " : " + str_min;
+            EditText txt = (EditText) findViewById(R.id.duetime_hour);
+            txt.setText(settledTime);
+
         }
 
     };
 
 
+    public void showCalendar (View view){
+        EditText txtDate = (EditText) findViewById(R.id.duedate);
+        DateDialog d = new DateDialog(view);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        d.show(ft, "DatePicker");
+    }
 
 }
