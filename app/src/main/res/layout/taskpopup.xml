@@ -9,7 +9,7 @@
     android:visibility="visible"
     android:transitionGroup="true"
     android:touchscreenBlocksFocus="false"
-    android:background="#bef8db">
+    android:background="#ffffff">
 
     <TextView
         android:layout_width="match_parent"
@@ -27,12 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:editable="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#ffffff"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/button2"
-        android:layout_alignEnd="@+id/button2" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 
     <TextView
@@ -53,12 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:editable="true"
+        android:layout_alignTop="@+id/textView2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#ffffff"
-        android:layout_below="@+id/textView2"
-        android:layout_alignRight="@+id/task_name_message"
-        android:layout_alignEnd="@+id/task_name_message" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,10 +71,9 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/duration_time"
-        android:layout_below="@+id/textView3"
-        android:layout_toLeftOf="@+id/textView4"
-        android:layout_toStartOf="@+id/textView4"
-        android:background="#ffffff" />
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -90,7 +82,7 @@
         android:id="@+id/textView4"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:layout_alignTop="@+id/duration_time"
+        android:layout_below="@+id/textView3"
         android:layout_toRightOf="@+id/textView3"
         android:layout_toEndOf="@+id/textView3" />
 
@@ -113,14 +105,12 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/duedate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#ffffff"
         android:onClick="showCalendar"
-        android:layout_below="@+id/duedate_message"
-        android:layout_alignRight="@+id/button1"
-        android:layout_alignEnd="@+id/button1"
-        />
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:layout_alignTop="@+id/duedate_message"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="match_parent"
@@ -142,14 +132,10 @@
         android:ems="10"
         android:id="@+id/duetime_hour"
         android:focusable="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#ffffff"
-        android:layout_toStartOf="@+id/textView4"
         android:onClick="showTimePicker"
-        android:layout_below="@+id/duetime_message"
-        android:layout_alignRight="@+id/duedate"
-        android:layout_alignEnd="@+id/duedate" />
+        android:layout_alignTop="@+id/duetime_message"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
     <Button
@@ -193,11 +179,11 @@
         android:id="@+id/spinner1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:popupBackground="#faeefb"
+        android:background="#5499dfff"
         android:entries="@array/priorities"
         android:layout_below="@+id/priority"
         android:layout_alignLeft="@+id/duration_time"
-        android:layout_alignStart="@+id/duration_time" />
+        android:layout_alignStart="@+id/duration_time"
+        />
 
 </RelativeLayout>
