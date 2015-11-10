@@ -39,7 +39,7 @@ public class RecyclerViewDemoApp extends Application {
 
             String s[] = {"Finish homework", "Work on project", "Do lab exercise", "Type up proposal", "Group meeting", "Study for exams", "Work on coding project"};
             model.label = s[r.nextInt(s.length)];
-
+            model.duration = r.nextInt(10)+1;
             model.priority = r.nextInt(10)+1;
 
             demoData.add(model);

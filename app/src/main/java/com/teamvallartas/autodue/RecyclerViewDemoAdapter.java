@@ -88,8 +88,13 @@ public class RecyclerViewDemoAdapter
                 viewHolder.label.getContext(),
                 model.dateTime.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
-        viewHolder.dateTime.setText("Due " + dateStr);
-        viewHolder.priorityText.setText("Position: " + model.priority);
+
+        long millis = System.currentTimeMillis();
+        int daysDifference = (int) ((model.dateTime.getTime() - millis)/(1000*60*60*24));
+
+        viewHolder.dateTime.setText("Due " + dateStr + " (" + daysDifference + " day/s)");
+        viewHolder.durationText.setText("Time needed: " + model.duration + " hours");
+        viewHolder.priorityText.setText("Priority: " + model.priority);
         viewHolder.itemView.setActivated(selectedItems.get(position, false));
     }
 
@@ -129,12 +134,15 @@ public class RecyclerViewDemoAdapter
         TextView label;
         TextView dateTime;
         TextView priorityText;
+        TextView durationText;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.txt_label_item);
             dateTime = (TextView) itemView.findViewById(R.id.txt_date_time);
             priorityText = (TextView) itemView.findViewById(R.id.txt_priority);
+            durationText = (TextView) itemView.findViewById(R.id.txt_duration);
+
         }
     }
 }
