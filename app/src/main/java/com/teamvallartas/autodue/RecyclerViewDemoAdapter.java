@@ -88,8 +88,8 @@ public class RecyclerViewDemoAdapter
                 viewHolder.label.getContext(),
                 model.dateTime.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
-        viewHolder.dateTime.setText(dateStr);
-        viewHolder.priorityText.setText("Priority: " + model.priority);
+        viewHolder.dateTime.setText("Due " + dateStr);
+        viewHolder.priorityText.setText("Position: " + model.priority);
         viewHolder.itemView.setActivated(selectedItems.get(position, false));
     }
 

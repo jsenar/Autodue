@@ -44,6 +44,6 @@ public class CardViewDemoActivity extends Activity {
                 model.dateTime.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
         dateTime.setText(dateStr);
-        labelPriority.setText("Priority: " + model.priority);
+        labelPriority.setText("Position: " + model.priority);
     }
 }
