@@ -47,10 +47,10 @@ public class CardViewDemoActivity extends Activity {
                 DateUtils.FORMAT_ABBREV_ALL);
 
         long millis = System.currentTimeMillis();
-        int daysDifference = (int) ((model.dateTime.getTime() - millis)/(1000*60*60*24));
+        int hoursLeft = (int) ((model.dateTime.getTime() - millis)/(1000*60*60));
 
-        dateTime.setText("Due " + dateStr + " (" + daysDifference + " day/s)");
-        labelDuration.setText("Time needed: " + model.duration + " hours");
+        dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
+        labelDuration.setText("Time needed: " + model.duration/3600000 + " hours");
         labelPriority.setText("Priority: " + model.priority );
     }
 }
