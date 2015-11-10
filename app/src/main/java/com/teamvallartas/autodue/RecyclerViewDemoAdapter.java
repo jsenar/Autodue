@@ -90,10 +90,10 @@ public class RecyclerViewDemoAdapter
                 DateUtils.FORMAT_ABBREV_ALL);
 
         long millis = System.currentTimeMillis();
-        int daysDifference = (int) ((model.dateTime.getTime() - millis)/(1000*60*60*24));
+        int hoursLeft = (int) ((model.dateTime.getTime() - millis)/(1000*60*60));
 
-        viewHolder.dateTime.setText("Due " + dateStr + " (" + daysDifference + " day/s)");
-        viewHolder.durationText.setText("Time needed: " + model.duration + " hours");
+        viewHolder.dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
+        viewHolder.durationText.setText("Time needed: " + model.duration/3600000 + " hours");
         viewHolder.priorityText.setText("Priority: " + model.priority);
         viewHolder.itemView.setActivated(selectedItems.get(position, false));
     }

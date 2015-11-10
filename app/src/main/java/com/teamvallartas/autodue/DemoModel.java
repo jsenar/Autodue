@@ -13,15 +13,21 @@ public class DemoModel implements Comparable<DemoModel> {
     int priority;
 
     public int compareTo(DemoModel other) {
-        if (this.priority < other.getPriority()) {
-            return 1;
+
+        if(this.getDateTime() == other.getDateTime()) {
+            // Sort priority descending if due time is same
+            if (this.getPriority() < other.getPriority()) {
+                return -1;
+            } else {
+                return 1;
+            }
         }
-        else {
-            return -1;
-        }
+        else
+            return (this.getDateTime().before(other.getDateTime()))?-1:1;
     }
 
     public int getPriority(){
         return priority;
     }
+    public Date getDateTime() { return dateTime; }
 }

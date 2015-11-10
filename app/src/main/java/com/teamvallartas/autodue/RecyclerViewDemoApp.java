@@ -20,7 +20,16 @@ public class RecyclerViewDemoApp extends Application {
     private static PriorityQueue<DemoModel> demoQueue = new PriorityQueue<DemoModel>(100, new Comparator<DemoModel>(){
         public int compare(DemoModel m1, DemoModel m2)
         {
-            return (m2.priority>m1.priority)?1:-1; // descending order
+            if(m1.getDateTime() == m2.getDateTime()) {
+                // Sort priority descending if due time is same
+                if (m1.getPriority() < m2.getPriority()) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+            else
+                return (m1.getDateTime().before(m2.getDateTime()))?-1:1;
         }
     });
 
@@ -34,12 +43,12 @@ public class RecyclerViewDemoApp extends Application {
         for (int i = 0; i < 20; i++) {
             DemoModel model = new DemoModel();
             DateTime dateTime = new DateTime();
-            dateTime = dateTime.plusDays(r.nextInt(15));
+            dateTime = dateTime.plusDays(r.nextInt(15)+1);
             model.dateTime = dateTime.toDate();
 
             String s[] = {"Finish homework", "Work on project", "Do lab exercise", "Type up proposal", "Group meeting", "Study for exams", "Work on coding project"};
             model.label = s[r.nextInt(s.length)];
-            model.duration = r.nextInt(10)+1;
+            model.duration = (r.nextInt(10)+1)*3600000;
             model.priority = r.nextInt(10)+1;
 
             demoData.add(model);
