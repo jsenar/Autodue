@@ -34,12 +34,12 @@ public class RecyclerViewDemoApp extends Application {
         for (int i = 0; i < 20; i++) {
             DemoModel model = new DemoModel();
             DateTime dateTime = new DateTime();
-            dateTime = dateTime.minusDays(r.nextInt(30));
+            dateTime = dateTime.plusDays(r.nextInt(15));
             model.dateTime = dateTime.toDate();
 
             String s[] = {"Finish homework", "Work on project", "Do lab exercise", "Type up proposal", "Group meeting", "Study for exams", "Work on coding project"};
             model.label = s[r.nextInt(s.length)];
-
+            model.duration = r.nextInt(10)+1;
             model.priority = r.nextInt(10)+1;
 
             demoData.add(model);

@@ -37,13 +37,20 @@ public class CardViewDemoActivity extends Activity {
         // Contents
         TextView label = (TextView) cardView.findViewById(R.id.txt_label_item);
         TextView dateTime = (TextView) cardView.findViewById(R.id.txt_date_time);
+        TextView labelDuration = (TextView) cardView.findViewById(R.id.txt_duration);
         TextView labelPriority = (TextView) cardView.findViewById(R.id.txt_priority);
+
         label.setText(model.label);
         String dateStr = DateUtils.formatDateTime(
                 this,
                 model.dateTime.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
-        dateTime.setText(dateStr);
-        labelPriority.setText("Priority: " + model.priority);
+
+        long millis = System.currentTimeMillis();
+        int daysDifference = (int) ((model.dateTime.getTime() - millis)/(1000*60*60*24));
+
+        dateTime.setText("Due " + dateStr + " (" + daysDifference + " day/s)");
+        labelDuration.setText("Time needed: " + model.duration + " hours");
+        labelPriority.setText("Priority: " + model.priority );
     }
 }
