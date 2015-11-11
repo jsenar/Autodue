@@ -22,11 +22,7 @@ public class RecyclerViewDemoApp extends Application {
         {
             if(m1.getDateTime() == m2.getDateTime()) {
                 // Sort priority descending if due time is same
-                if (m1.getPriority() < m2.getPriority()) {
-                    return -1;
-                } else {
-                    return 1;
-                }
+                return(m1.priority<m2.getPriority()?1:-1);
             }
             else
                 return (m1.getDateTime().before(m2.getDateTime()))?-1:1;
