@@ -14,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import android.app.Dialog;
@@ -46,13 +49,20 @@ public class TaskScreen extends Activity {
         dropdown.setAdapter(adapter);*/
     }
 
-    public void addTask(View view){
+    public void addTask(View view) throws ParseException {
         //Button button = (Button) findViewById(R.id.button1);
         DemoModel demo = new DemoModel();
         demo.label = ((EditText)findViewById(R.id.task_name_message)).getText().toString();
         demo.description = ((EditText)findViewById(R.id.description_name_message)).getText().toString();
         String dur = ((EditText)findViewById(R.id.duration_time)).getText().toString();
         demo.duration = Long.parseLong(  dur , 10) * 1000 * 60 * 60;
+
+        // Get date
+        String s  = ((EditText)findViewById(R.id.duedate)).getText().toString();
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        Date dDate = df.parse(s);
+        demo.dateTime = dDate;
+        
         Event e = Calendar.findTime(demo.duration, new Date(Long.MAX_VALUE), demo.label);
         if(e == null)
             Log.d("", "is null");

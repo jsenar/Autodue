@@ -141,10 +141,7 @@ public class RecyclerViewDemoActivity
     public static void addItemToList(DemoModel model) {
         //DemoModel model = new DemoModel();
         //model.label = "New Task " + itemCount;
-        Random r = new Random();
-        model.priority = r.nextInt(10)+1;
         itemCount++;
-        model.dateTime = new Date();
         int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).
                 findFirstVisibleItemPosition();
         // needed to be able to show the animation
