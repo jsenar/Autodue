@@ -62,7 +62,17 @@ public class TaskScreen extends Activity {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date dDate = df.parse(s);
         demo.dateTime = dDate;
-        
+
+        // Get priority
+        Spinner mySpinner=(Spinner) findViewById(R.id.spinner1);
+        String p = mySpinner.getSelectedItem().toString();
+        switch(p) {
+            case "Low": demo.priority = 1;break;
+            case "Medium": demo.priority = 2;break;
+            case "High": demo.priority = 3;break;
+            default: demo.priority = 1;break;
+        }
+
         Event e = Calendar.findTime(demo.duration, new Date(Long.MAX_VALUE), demo.label);
         if(e == null)
             Log.d("", "is null");
