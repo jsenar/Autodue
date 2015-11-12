@@ -41,7 +41,7 @@ public class TaskScreen extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width * 0.95), (int) (height * 0.95));
+        getWindow().setLayout((int) (width), (int) (height));
 
         /*Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
         String[] items = new String[]{"Very Important", "Kinda Important", "Important", "Little Important", "Not Important"};

@@ -7,7 +7,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Taskscreen"
     android:outlineProvider="paddedBounds"
     android:visibility="visible"
-    android:transitionGroup="true"
+    android:transitionGroup="false"
     android:touchscreenBlocksFocus="false"
     android:background="#ffffff">
 
@@ -27,8 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:editable="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
     <TextView
@@ -39,7 +40,7 @@
         android:layout_below="@+id/task_name_message"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="17dp"
         android:textStyle="bold"
         android:textColor="#000000" />
 
@@ -49,20 +50,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:editable="true"
-        android:layout_alignTop="@+id/textView2"
+        android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Duration"
+        android:text="Duration (in hours)"
         android:layout_below="@+id/description_name_message"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView3"
         android:textStyle="bold"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="17dp"
         android:textColor="#000000" />
 
 
@@ -71,20 +72,9 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/duration_time"
-        android:layout_alignTop="@+id/textView3"
+        android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="hours"
-        android:id="@+id/textView4"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:layout_below="@+id/textView3"
-        android:layout_toRightOf="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3" />
 
 
     <TextView
@@ -95,7 +85,7 @@
         android:layout_below="@+id/duration_time"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="17dp"
         android:textStyle="bold"
         android:textColor="#000000" />
 
@@ -108,7 +98,7 @@
         android:onClick="showCalendar"
         android:focusable="false"
         android:focusableInTouchMode="true"
-        android:layout_alignTop="@+id/duedate_message"
+        android:layout_below="@+id/duedate_message"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -121,7 +111,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textStyle="bold"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="17dp"
         android:textColor="#000000" />
 
 
@@ -133,7 +123,7 @@
         android:id="@+id/duetime_hour"
         android:focusable="false"
         android:onClick="showTimePicker"
-        android:layout_alignTop="@+id/duetime_message"
+        android:layout_below="@+id/duetime_message"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -147,9 +137,9 @@
         android:onClick="addTask"
         android:background="#000000"
         android:textColor="@color/white"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_alignTop="@+id/button2" />
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/priority"
+        android:layout_toEndOf="@+id/priority" />
 
     <Button
         android:layout_width="wrap_content"
@@ -172,18 +162,18 @@
         android:id="@+id/priority"
         android:textStyle="bold"
         android:layout_below="@+id/duetime_hour"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="17dp"
         android:textColor="#000000" />
 
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#5499dfff"
+        android:background="#6de8f3"
         android:entries="@array/priorities"
         android:layout_below="@+id/priority"
         android:layout_alignLeft="@+id/duration_time"
         android:layout_alignStart="@+id/duration_time"
-        />
+        android:spinnerMode="dropdown" />
 
 </RelativeLayout>
