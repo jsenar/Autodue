@@ -58,9 +58,12 @@ public class TaskScreen extends Activity {
         demo.duration = Long.parseLong(  dur , 10) * 1000 * 60 * 60;
 
         // Get date
-        String s  = ((EditText)findViewById(R.id.duedate)).getText().toString();
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        Date dDate = df.parse(s);
+        String dateString = ((EditText)findViewById(R.id.duedate)).getText().toString();
+        String timeString = ((EditText)findViewById(R.id.duetime_hour)).getText().toString();
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        String dateAndTime = dateString + " " + timeString;
+        System.out.println(dateAndTime);
+        Date dDate = df.parse(dateAndTime);
         demo.dateTime = dDate;
 
         // Get priority
@@ -123,7 +126,7 @@ public class TaskScreen extends Activity {
             if( minute < 10 )
                 str_min = "0" + minute;
 
-            String settledTime = str_hour + " : " + str_min;
+            String settledTime = str_hour + ":" + str_min;
             EditText txt = (EditText) findViewById(R.id.duetime_hour);
             txt.setText(settledTime);
 
