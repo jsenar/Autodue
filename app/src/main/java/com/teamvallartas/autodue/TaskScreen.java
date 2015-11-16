@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.app.Dialog;
 import android.widget.*;
+import android.content.Intent;
 
 
 /**
@@ -42,11 +43,6 @@ public class TaskScreen extends Activity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width), (int) (height));
-
-        /*Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"Very Important", "Kinda Important", "Important", "Little Important", "Not Important"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        dropdown.setAdapter(adapter);*/
     }
 
     public void addTask(View view) throws ParseException {
@@ -81,24 +77,20 @@ public class TaskScreen extends Activity {
             Log.d("", "is null");
         //Log.d("", );
         Toast.makeText(getApplicationContext(), e.getDescription() + " " + e.getStartTime().toString() + " " + e.getEndTime().toString(), 5000).show();
-//        RecyclerViewDemoApp.addItemToList(demo);
+        //RecyclerViewDemoApp.addItemToList(demo);
         RecyclerViewDemoActivity.addItemToList(demo);
+
+        //startActivity(new Intent(TaskScreen.this, EventPopUp.class));
+
         this.finish();
+        startActivity(new Intent(TaskScreen.this, EventPopUp.class));
+
     }
     public void hidePopup(View view) {
         //Button button = (Button) findViewById(R.id.button1);
         this.finish();
     }
 
-    /* public void deselectButton2(View view){
-        RadioButton b = (RadioButton) findViewById(R.id.radioButton2);
-        b.setChecked(false);
-    }
-
-    public void deselectButton1(View view){
-        RadioButton b = (RadioButton) findViewById(R.id.radioButton1);
-        b.setChecked(false);
-    } */
 
     @SuppressWarnings("deprecation")
     public void showTimePicker(View view){

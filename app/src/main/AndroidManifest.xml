@@ -36,6 +36,9 @@
             android:label="@string/new_task">
         </activity>
 
+        <activity android:name="com.teamvallartas.autodue.EventPopUp"></activity>
+
+
     </application>
 
 </manifest>
