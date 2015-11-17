@@ -26,4 +26,5 @@ public class DemoModel implements Comparable<DemoModel> {
         return priority;
     }
     public Date getDateTime() { return dateTime; }
+    public String getLabel() {  return label;}
 }
