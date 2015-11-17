@@ -3,10 +3,13 @@ package com.teamvallartas.autodue;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -132,6 +135,13 @@ public class TaskScreen extends Activity {
         DateDialog d = new DateDialog(view);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         d.show(ft, "DatePicker");
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 
 }
