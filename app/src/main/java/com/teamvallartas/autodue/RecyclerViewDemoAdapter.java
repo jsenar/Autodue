@@ -94,7 +94,14 @@ public class RecyclerViewDemoAdapter
 
         viewHolder.dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
         viewHolder.durationText.setText("Time needed: " + model.duration/3600000 + " hours");
-        viewHolder.priorityText.setText("Priority: " + model.priority);
+        String prioritySetting;
+        switch(model.priority) {
+            case 1: prioritySetting = "Low";break;
+            case 2: prioritySetting = "Medium";break;
+            case 3: prioritySetting = "High";break;
+            default: prioritySetting = "Low";break;
+        }
+        viewHolder.priorityText.setText("Priority: " + prioritySetting);
         viewHolder.itemView.setActivated(selectedItems.get(position, false));
     }
 

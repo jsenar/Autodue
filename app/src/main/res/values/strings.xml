@@ -6,10 +6,12 @@
     <string name="action_remove">Remove</string>
     <string name="selected_count">%1$s selected</string>
     <string name="action_refresh">Refresh</string>
+    <string name="new_task">New Task</string>
+    <string name="task_details">Task Details</string>
     <string-array name="priorities">
-        <item>Must Do</item>
-        <item>Do</item>
-        <item>Maybe Do</item>
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
     </string-array>
 
 </resources>

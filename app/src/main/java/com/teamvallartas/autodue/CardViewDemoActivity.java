@@ -51,6 +51,13 @@ public class CardViewDemoActivity extends Activity {
 
         dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
         labelDuration.setText("Time needed: " + model.duration/3600000 + " hours");
-        labelPriority.setText("Priority: " + model.priority );
+        String prioritySetting;
+        switch(model.priority) {
+            case 1: prioritySetting = "Low";break;
+            case 2: prioritySetting = "Medium";break;
+            case 3: prioritySetting = "High";break;
+            default: prioritySetting = "Low";break;
+        }
+        labelPriority.setText("Priority: " + prioritySetting );
     }
 }

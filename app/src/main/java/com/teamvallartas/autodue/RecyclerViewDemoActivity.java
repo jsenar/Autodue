@@ -31,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
@@ -120,6 +121,21 @@ public class RecyclerViewDemoActivity
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
 
+        checkPastEvents(items);
+    }
+
+    private void checkPastEvents(List<DemoModel> items)
+    {
+        Date d = new Date();
+        System.out.println("size of items list is: " + items.size());
+        for(int i=0; i<items.size(); i++)
+        {
+            System.out.println(items.get(i).getDateTime().getTime());
+            if(items.get(i).getDateTime().getTime()< d.getTime())
+            {
+                Toast.makeText(getApplicationContext(), items.get(i).getLabel() + " is overdue", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -141,10 +157,7 @@ public class RecyclerViewDemoActivity
     public static void addItemToList(DemoModel model) {
         //DemoModel model = new DemoModel();
         //model.label = "New Task " + itemCount;
-        Random r = new Random();
-        model.priority = r.nextInt(10)+1;
         itemCount++;
-        model.dateTime = new Date();
         int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).
                 findFirstVisibleItemPosition();
         // needed to be able to show the animation
