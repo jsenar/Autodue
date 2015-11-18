@@ -30,7 +30,7 @@ public class DemoModel implements Comparable<DemoModel> {
     }
     public int compareTo(DemoModel other) {
 
-        if(this.getDateTime() == other.getDateTime()) {
+        if(this.getDateTime().equals(other.getDateTime())) {
             // Sort priority descending if due time is same
             return(this.priority<other.getPriority()?1:-1);
         }
