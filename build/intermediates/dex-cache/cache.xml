@@ -2,46 +2,39 @@
 <items version="2" >
 
     <item
-        jar="/Users/evahuynh/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.0/support-annotations-23.1.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
-        <dex dex="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.0-b63687ec20f63aadbcdb7ec963430a46f7893bbc.jar" />
-    </item>
-    <item
-        jar="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.0/jars/classes.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
-        <dex dex="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/pre-dexed/debug/classes-51a473ede1af63d8ef6784c784bafe27d848e11b.jar" />
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\classes-aebaa77945477b6504402a37b5c8631a11b10437.jar" />
     </item>
     <item
-        jar="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/exploded-aar/net.danlew/android.joda/2.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="fbf3f2e9e9eb8c9aeb41977952ceb5f613c4baf1">
-        <dex dex="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/pre-dexed/debug/classes-2d4fe01d2a823b26d0bdcc615d88338d4ce23153.jar" />
-    </item>
-    <item
-        jar="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="d96886efea7cc74fbb3abd0e3b51d5638fc57be0">
-        <dex dex="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/pre-dexed/debug/classes-786f4b4e7e74417ac61ba4bc090661c45010c9bc.jar" />
-    </item>
-    <item
-        jar="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.0-b5c3e766dd57912071c89a409fa0bdc771127a5d.jar" />
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-482087899c8521fe26fa52c8c21ea4323dfb5339.jar" />
     </item>
     <item
-        jar="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d96886efea7cc74fbb3abd0e3b51d5638fc57be0">
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\classes-02b4caa4fceac04f8477a0089ed365804245ebe6.jar" />
+    </item>
+    <item
+        jar="D:\Users\brahu_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-83148a5ecce4c43a94545c3912f7fbf140fbabcb.jar" />
+    </item>
+    <item
+        jar="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="/Users/evahuynh/Downloads/Autodue/app/build/intermediates/pre-dexed/debug/classes-d63f8af01e4bf3891ff607c10db5fca6a175efb1.jar" />
+        <dex dex="D:\Users\Brandon\Projects\CSE110\Autodue\app\build\intermediates\pre-dexed\debug\classes-e49dd97babdbe6accf7f0a2bee8c1d22224154e7.jar" />
     </item>
 
 </items>
