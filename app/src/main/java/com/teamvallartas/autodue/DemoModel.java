@@ -8,10 +8,26 @@ public class DemoModel implements Comparable<DemoModel> {
     String description;
     long duration; // in milliseconds
     Date dateTime;
+    Date begin;
+    Date end;
     String pathToImage;
     int id = ++nextId;
     int priority;
+    public DemoModel() {
 
+    }
+    public DemoModel(DemoModel other){
+        label = other.getLabel();
+        description = other.description;
+        duration = other.duration;
+        dateTime = other.getDateTime();
+        begin = other.begin;
+        end = other.end;
+        pathToImage = other.pathToImage;
+        id = other.id;
+        priority = other.getPriority();
+
+    }
     public int compareTo(DemoModel other) {
 
         if(this.getDateTime() == other.getDateTime()) {

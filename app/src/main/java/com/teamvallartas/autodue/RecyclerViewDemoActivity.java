@@ -8,6 +8,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.support.v7.widget.RecyclerView;
 import android.transition.ChangeTransform;
 import android.util.Log;
 import android.view.ActionMode;
+import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,7 +34,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
+import android.view.Gravity;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
@@ -60,6 +65,7 @@ public class RecyclerViewDemoActivity
     ActionMode actionMode;
     ImageButton fab;
     Context mContext;
+    PopupWindow popOver;
 
     //popup items
 
@@ -72,6 +78,7 @@ public class RecyclerViewDemoActivity
         super.onCreate(savedInstanceState);
         mContext = this;
         Window win = getWindow();
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         win.setAllowReturnTransitionOverlap(true);
         win.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         win.setSharedElementExitTransition(new ChangeTransform());
@@ -184,7 +191,10 @@ public class RecyclerViewDemoActivity
             // fab click
             getCalendarEvents();
             startActivity(new Intent(RecyclerViewDemoActivity.this, TaskScreen.class));
-            new Intent(RecyclerViewDemoActivity.this, TaskScreen.class);
+
+
+            //new Intent(RecyclerViewDemoActivity.this, TaskScreen.class);
+            //onShowPopup(view);
 
             //addItemToList();
         } else if (view.getId() == R.id.container_list_item) {
@@ -205,7 +215,22 @@ public class RecyclerViewDemoActivity
             this.startActivity(startIntent, options.toBundle());
         }
     }
-
+//    public void onShowPopup(View v){
+//        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        final View inflatedView = layoutInflater.inflate(R.layout.taskpopup, null, false);
+//        Display display = getWindowManager().getDefaultDisplay();
+//        final Point size = new Point();
+//        display.getSize(size);
+//        int mDeviceHeight = size.y;
+//        popOver = new PopupWindow(inflatedView, size.x - 50,size.y - 400, true );
+//        popOver.setBackgroundDrawable(getResources().getDrawable(R.drawable.popover_background));
+//        popOver.setFocusable(true);
+//        // make it outside touchable to dismiss the popup window
+//        popOver.setOutsideTouchable(true);
+//        popOver.showAtLocation(v, Gravity.BOTTOM, 0, 200);
+//
+//
+//    }
     private void myToggleSelection(int idx) {
         adapter.toggleSelection(idx);
         String title = getString(R.string.selected_count, adapter.getSelectedItemCount());
@@ -334,10 +359,10 @@ public class RecyclerViewDemoActivity
 // event instances
 
         java.util.Calendar beginTime = java.util.Calendar.getInstance();
-        beginTime.set(1970, 9, 23, 8, 0);
+        //beginTime.set(1970, 9, 23, 8, 0);
         long startMillis = beginTime.getTimeInMillis();
         java.util.Calendar endTime = java.util.Calendar.getInstance();
-        endTime.set(2099, 10, 24, 8, 0);
+        endTime.setTimeInMillis(endTime.getTimeInMillis()+ (1000*60*60*24*365));
         long endMillis = endTime.getTimeInMillis();
 
         Cursor cur = null;
@@ -370,20 +395,15 @@ public class RecyclerViewDemoActivity
             long eventID = 0;
             long beginVal = 0;
             long endVal = 0;
-            // Get the field values
             eventID = cur.getLong(PROJECTION_ID_INDEX);
             beginVal = cur.getLong(PROJECTION_BEGIN_INDEX);
             title = cur.getString(PROJECTION_TITLE_INDEX);
             endVal = cur.getLong(PROJECTION_END_INDEX);
             com.teamvallartas.autodue.Calendar.insert(new Event(new Date(beginVal),new Date(endVal),title));
-            // Do something with the values.
-            Log.d("Oh", "Event:  " + title);
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(beginVal);
             DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-            Log.d("Oh", "Date: " + formatter.format(calendar.getTime()));
         }
-        Log.d("",""+i);
 
     }
     public void openCalendar(){
@@ -396,14 +416,6 @@ public class RecyclerViewDemoActivity
                 .setData(builder.build());
         startActivity(intent);
     }
-    /*private void populateGetEventsBtn() {
-        m_button_getEvents = (Button) findViewById(R.id.button_get_events);
-        m_button_getEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getLastThreeEvents();
-            }
-        });
-    }*/
+
 }
 

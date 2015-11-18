@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -32,10 +33,12 @@ import android.content.Intent;
  */
 public class TaskScreen extends Activity {
     static final int dialog_id= 0;
+    public static DemoModel demo;
     int hour, minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taskpopup);
 
@@ -46,20 +49,48 @@ public class TaskScreen extends Activity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width), (int) (height));
+
+
     }
 
     public void addTask(View view) throws ParseException {
         //Button button = (Button) findViewById(R.id.button1);
-        DemoModel demo = new DemoModel();
-        demo.label = ((EditText)findViewById(R.id.task_name_message)).getText().toString();
-        demo.description = ((EditText)findViewById(R.id.description_name_message)).getText().toString();
-        String dur = ((EditText)findViewById(R.id.duration_time)).getText().toString();
+        demo = new DemoModel();
+        demo.label = "";
+        demo.label += ((EditText)findViewById(R.id.task_name_message)).getText().toString();
+        if(demo.label == ""){
+            Toast.makeText(getApplicationContext(),"Name must be specified!", 1500).show();
+            return;
+        }
+        demo.description = "";
+        demo.description += ((EditText)findViewById(R.id.description_name_message)).getText().toString();
+        if(demo.description == ""){
+            Toast.makeText(getApplicationContext(),"Description must be specified!", 1500).show();
+            return;
+        }
+        String dur = "";
+        dur += ((EditText)findViewById(R.id.duration_time)).getText().toString();
+        if(dur == ""){
+            Toast.makeText(getApplicationContext(),"Duration must be specified!", 1500).show();
+            return;
+        }
         demo.duration = Long.parseLong(  dur , 10) * 1000 * 60 * 60;
 
         // Get date
-        String dateString = ((EditText)findViewById(R.id.duedate)).getText().toString();
-        String timeString = ((EditText)findViewById(R.id.duetime_hour)).getText().toString();
+        String dateString = "";
+        dateString += ((EditText)findViewById(R.id.duedate)).getText().toString();
+        if(dateString == ""){
+            Toast.makeText(getApplicationContext(),"Due Date must be specified!", 1500).show();
+            return;
+        }
+        String timeString = "";
+        timeString += ((EditText)findViewById(R.id.duetime_hour)).getText().toString();
+        if(timeString == ""){
+            Toast.makeText(getApplicationContext(),"Time must be specified!", 1500).show();
+            return;
+        }
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
         String dateAndTime = dateString + " " + timeString;
         System.out.println(dateAndTime);
         Date dDate = df.parse(dateAndTime);
@@ -78,15 +109,20 @@ public class TaskScreen extends Activity {
         Event e = Calendar.findTime(demo.duration, new Date(Long.MAX_VALUE), demo.label);
         if(e == null)
             Log.d("", "is null");
+        demo.begin = e.getStartTime();
+        demo.end = e.getEndTime();
         //Log.d("", );
-        Toast.makeText(getApplicationContext(), e.getDescription() + " " + e.getStartTime().toString() + " " + e.getEndTime().toString(), 5000).show();
+        //Toast.makeText(getApplicationContext(), e.getDescription() + " " + e.getStartTime().toString() + " " + e.getEndTime().toString(), 5000).show();
         //RecyclerViewDemoApp.addItemToList(demo);
-        RecyclerViewDemoActivity.addItemToList(demo);
+        //RecyclerViewDemoActivity.addItemToList(demo);
 
         //startActivity(new Intent(TaskScreen.this, EventPopUp.class));
 
         this.finish();
         startActivity(new Intent(TaskScreen.this, EventPopUp.class));
+//        ((TextView)findViewById(R.id.EventName)).setText(demo.label);
+//        ((TextView)findViewById(R.id.EventDescription)).setText(demo.description);
+//        ((TextView)findViewById(R.id.TimeString)).setText(demo.begin.toString() + " to " + demo.end.toString());
 
     }
     public void hidePopup(View view) {

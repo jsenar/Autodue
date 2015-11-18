@@ -37,7 +37,6 @@ public class Calendar{
 		Event iter;
 		for(int i = 0; i<myCalendar.size(); i++){
 			if(possibleTime.getEndTime().compareTo(deadline)>=0){
-				System.out.println("nnnsssn");
 				return null;
 			}
 
@@ -46,14 +45,12 @@ public class Calendar{
 				continue;
 			}
 			if(!iter.intersects(possibleTime)){
-				System.out.println("n");
 				int j = i;
 				boolean collision = false;
 				while(++j<myCalendar.size()&& iter.getStartTime().before(possibleTime.getEndTime())){
 					
 					iter = myCalendar.get(j);
 					if(iter.intersects(possibleTime)){
-						System.out.println("nnnn");
 						collision = true;
 					}
 
@@ -66,7 +63,6 @@ public class Calendar{
 			possibleTime.setStartingTime(iter.getEndTime().getTime()+1);
 			possibleTime.setEndingTime(iter.getEndTime().getTime() + length);
 		}
-		System.out.println("nnn");
 		return possibleTime;
 }
 	}
