@@ -9,5 +9,12 @@
     <color name="colorBlue">#FF0612F6</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
+    <color name="priorityval1">#ffdb38</color>
+    <color name="priorityval2">#faad32</color>
+    <color name="priorityval3">#fa9837</color>
+    <color name="priorityval4">#fc7e3f</color>
+    <color name="priorityval5">#eb6336</color>
+    <color name="priorityval6">#eb553b</color>
+    <color name="priorityval7">#f04141</color>
 
 </resources>

@@ -13,5 +13,12 @@
         <item>Medium</item>
         <item>Low</item>
     </string-array>
+    <string name="priorityval1">#ffdb38</string>
+    <string name="priorityval2">#faad32</string>
+    <string name="priorityval3">#fa9837</string>
+    <string name="priorityval4">#fc7e3f</string>
+    <string name="priorityval5">#eb6336</string>
+    <string name="priorityval6">#eb553b</string>
+    <string name="priorityval7">#f04141</string>
 
 </resources>

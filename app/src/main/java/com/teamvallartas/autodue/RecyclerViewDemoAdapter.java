@@ -1,11 +1,13 @@
 package com.teamvallartas.autodue;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
@@ -92,6 +94,22 @@ public class RecyclerViewDemoAdapter
         long millis = System.currentTimeMillis();
         int hoursLeft = (int) ((model.dateTime.getTime() - millis)/(1000*60*60));
 
+        viewHolder.colorIndicator.setImageResource(R.drawable.ic_brightness_1_white_24dp);
+
+        int color = Color.parseColor("#000000");
+        int hoursInDay = 24;
+
+        if (hoursLeft <= 0) {}
+        else if(hoursLeft < hoursInDay) {color = Color.parseColor("#f04141");}
+        else if (hoursLeft < hoursInDay*2) {color = Color.parseColor("#eb553b");}
+        else if (hoursLeft < hoursInDay*3) {color = Color.parseColor("#eb6336");}
+        else if (hoursLeft < hoursInDay*4) {color = Color.parseColor("#fc7e3f");}
+        else if (hoursLeft < hoursInDay*5) {color = Color.parseColor("#fa9837");}
+        else if (hoursLeft < hoursInDay*6) {color = Color.parseColor("#faad32");}
+        else {color = Color.parseColor("#ffdb38");}
+
+        viewHolder.colorIndicator.setColorFilter(color);
+
         viewHolder.dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
         viewHolder.durationText.setText("Time needed: " + model.duration/3600000 + " hours");
         String prioritySetting;
@@ -142,9 +160,12 @@ public class RecyclerViewDemoAdapter
         TextView dateTime;
         TextView priorityText;
         TextView durationText;
+        ImageView colorIndicator;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
+
+            colorIndicator = (ImageView) itemView.findViewById(R.id.color_indicator);
             label = (TextView) itemView.findViewById(R.id.txt_label_item);
             dateTime = (TextView) itemView.findViewById(R.id.txt_date_time);
             priorityText = (TextView) itemView.findViewById(R.id.txt_priority);
