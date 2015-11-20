@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="0dp"
+    android:paddingTop="15dp"
     android:paddingBottom="0dp"
     tools:context=".Taskscreen"
     android:outlineProvider="paddedBounds"
     android:visibility="visible"
     android:transitionGroup="false"
     android:touchscreenBlocksFocus="false"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    >
 
     <TextView
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/task_name_message"
         android:layout_alignEnd="@+id/task_name_message"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="@dimen/popup_font_size"/>
 
 
     <EditText android:id= "@+id/task_name_message"
@@ -41,8 +43,9 @@
         android:layout_below="@+id/task_name_message"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
+        android:textSize="@dimen/popup_font_size"
         android:textColor="#000000" />
 
 
@@ -64,7 +67,8 @@
         android:layout_alignParentStart="true"
         android:id="@+id/textView3"
         android:textStyle="bold"
-        android:layout_marginTop="17dp"
+        android:textSize="@dimen/popup_font_size"
+        android:layout_marginTop="10dp"
         android:textColor="#000000" />
 
 
@@ -86,8 +90,9 @@
         android:layout_below="@+id/duration_time"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
+        android:textSize="@dimen/popup_font_size"
         android:textColor="#000000" />
 
     <EditText
@@ -112,7 +117,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textStyle="bold"
-        android:layout_marginTop="17dp"
+        android:textSize="@dimen/popup_font_size"
+        android:layout_marginTop="10dp"
         android:textColor="#000000" />
 
 
@@ -162,16 +168,18 @@
         android:text="Priority "
         android:id="@+id/priority"
         android:textStyle="bold"
+        android:textSize="@dimen/popup_font_size"
         android:layout_below="@+id/duetime_hour"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="12dp"
         android:textColor="#000000" />
 
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#6de8f3"
+        android:layout_height="35dp"
+        android:background="#d699f0"
         android:entries="@array/priorities"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/priority"
         android:layout_alignLeft="@+id/duration_time"
         android:layout_alignStart="@+id/duration_time"
