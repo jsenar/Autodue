@@ -134,10 +134,8 @@ public class RecyclerViewDemoActivity
     private void checkPastEvents(List<DemoModel> items)
     {
         Date d = new Date();
-        System.out.println("size of items list is: " + items.size());
         for(int i=0; i<items.size(); i++)
         {
-            System.out.println(items.get(i).getDateTime().getTime());
             if(items.get(i).getDateTime().getTime()< d.getTime())
             {
                 Toast.makeText(getApplicationContext(), items.get(i).getLabel() + " is overdue", Toast.LENGTH_SHORT).show();
@@ -183,6 +181,11 @@ public class RecyclerViewDemoActivity
         RecyclerViewDemoApp.removeItemFromList(position);
         adapter.removeData(position);
     }*/
+
+    public static void removeItemFromListUsingObject(DemoModel model){
+        adapter.removeDataUsingObject(model);
+        adapter.sort();
+    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override

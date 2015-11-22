@@ -70,6 +70,11 @@ public class RecyclerViewDemoAdapter
         notifyItemRemoved(position);
     }
 
+    public void removeDataUsingObject(DemoModel model)
+    {
+        items.remove(model);
+    }
+
     public DemoModel getItem(int position) {
         return items.get(position);
     }
