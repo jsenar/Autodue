@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class CardViewDemoActivity extends Activity {
 
     CardView cardView;
@@ -38,15 +41,20 @@ public class CardViewDemoActivity extends Activity {
 
         // Contents
         TextView label = (TextView) cardView.findViewById(R.id.txt_label_item);
+        TextView labelDescription = (TextView) cardView.findViewById(R.id.txt_description);
         TextView dateTime = (TextView) cardView.findViewById(R.id.txt_date_time);
         TextView labelDuration = (TextView) cardView.findViewById(R.id.txt_duration);
         TextView labelPriority = (TextView) cardView.findViewById(R.id.txt_priority);
         ImageView colorIndicator = (ImageView) cardView.findViewById(R.id.color_indicator);
 
-        // Set task title
+        // Set task title and description
         label.setText(model.label);
+        labelDescription.setText("Description: " + model.description);
 
         // Set date
+        DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
+        String dateAndHours = df.format(model.dateTime);
+
         String dateStr = DateUtils.formatDateTime(
                 this,
                 model.dateTime.getTime(),
@@ -69,7 +77,7 @@ public class CardViewDemoActivity extends Activity {
 
         colorIndicator.setColorFilter(color);
 
-        dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
+        dateTime.setText("Due " + dateAndHours + " (" + hoursLeft + " hours left)");
         labelDuration.setText("Time needed: " + model.duration/3600000 + " hours");
 
         // Set priority

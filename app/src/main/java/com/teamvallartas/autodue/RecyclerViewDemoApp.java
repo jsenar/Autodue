@@ -40,9 +40,11 @@ public class RecyclerViewDemoApp extends Application {
             DemoModel model = new DemoModel();
             DateTime dateTime = new DateTime();
             dateTime = dateTime.plusDays(r.nextInt(15)-1);
+            dateTime = dateTime.plusMillis(r.nextInt(36000000));
             model.dateTime = dateTime.toDate();
 
             String s[] = {"Finish homework", "Work on project", "Do lab exercise", "Type up proposal", "Group meeting", "Study for exams", "Work on coding project"};
+            model.description = "Work on parts 1 and 2";
             model.label = s[r.nextInt(s.length)];
             model.duration = (r.nextInt(10)+1)*3600000;
             model.priority = r.nextInt(3)+1;

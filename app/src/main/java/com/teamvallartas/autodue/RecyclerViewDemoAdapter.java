@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -91,6 +94,10 @@ public class RecyclerViewDemoAdapter
     public void onBindViewHolder(ListItemViewHolder viewHolder, int position) {
         DemoModel model = items.get(position);
         viewHolder.label.setText(model.label);
+
+        DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
+        String dateAndHours = df.format(model.dateTime);
+
         String dateStr = DateUtils.formatDateTime(
                 viewHolder.label.getContext(),
                 model.dateTime.getTime(),
@@ -115,7 +122,7 @@ public class RecyclerViewDemoAdapter
 
         viewHolder.colorIndicator.setColorFilter(color);
 
-        viewHolder.dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
+        viewHolder.dateTime.setText("Due " + dateAndHours + " (" + hoursLeft + " hours left)");
         viewHolder.durationText.setText("Time needed: " + model.duration/3600000 + " hours");
         String prioritySetting;
         switch(model.priority) {
