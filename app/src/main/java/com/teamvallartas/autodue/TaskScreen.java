@@ -33,7 +33,7 @@ import android.content.Intent;
  */
 public class TaskScreen extends Activity {
     static final int dialog_id= 0;
-    public static DemoModel demo;
+    public static DemoModel demo = new DemoModel();
     int hour, minute;
 
     @Override
@@ -41,6 +41,25 @@ public class TaskScreen extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taskpopup);
+
+        /* Each time TaskScreen is brought up, check if the rescheduleModel is null
+            If it is non-null, then it's because we just pressed reschedule */
+        if(CardViewDemoActivity.rescheduleModel.label!="")
+        {
+            // Bring over name, description, and duration from cardview
+            EditText editName = (EditText) findViewById(R.id.task_name_message);
+            editName.setText(CardViewDemoActivity.rescheduleModel.label);
+
+            EditText editDescription = (EditText) findViewById(R.id.description_name_message);
+            editDescription.setText(CardViewDemoActivity.rescheduleModel.description);
+
+            EditText editDuration = (EditText) findViewById(R.id.duration_time);
+            long d = CardViewDemoActivity.rescheduleModel.duration/3600000;
+            editDuration.setText(String.valueOf(d));
+
+            // Reset this so that when you click FAB as usual you won't get previous cancelled values
+            CardViewDemoActivity.rescheduleModel = new DemoModel();
+        }
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);

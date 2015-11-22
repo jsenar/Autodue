@@ -2,6 +2,7 @@ package com.teamvallartas.autodue;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.text.SimpleDateFormat;
 public class CardViewDemoActivity extends Activity {
 
     CardView cardView;
+    static DemoModel rescheduleModel = new DemoModel();
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -101,5 +103,22 @@ public class CardViewDemoActivity extends Activity {
 
         finish();
     }
+
+    public void rescheduleItem(View view)  {
+
+        Bundle extras = getIntent().getExtras();
+        int id = extras.getInt(Constants.KEY_ID);
+        DemoModel model = RecyclerViewDemoApp.findById(id);
+
+        rescheduleModel = model;
+
+        // To make things simpler, treat rescheduling as deleting item and re-adding it
+        RecyclerViewDemoActivity.removeItemFromListUsingObject(model);
+
+        startActivity(new Intent(this, TaskScreen.class));
+
+        finish();
+    }
+
 
 }
