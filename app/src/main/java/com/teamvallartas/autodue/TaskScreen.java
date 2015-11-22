@@ -53,9 +53,9 @@ public class TaskScreen extends Activity {
             EditText editDescription = (EditText) findViewById(R.id.description_name_message);
             editDescription.setText(CardViewDemoActivity.rescheduleModel.description);
 
-            EditText editDuration = (EditText) findViewById(R.id.duration_time);
-            long d = CardViewDemoActivity.rescheduleModel.duration/3600000;
-            editDuration.setText(String.valueOf(d));
+//            EditText editDuration = (EditText) findViewById(R.id.duration_time);
+//            long d = CardViewDemoActivity.rescheduleModel.duration/3600000;
+//            editDuration.setText(String.valueOf(d));
 
             // Reset this so that when you click FAB as usual you won't get previous cancelled values
             CardViewDemoActivity.rescheduleModel = new DemoModel();
@@ -142,11 +142,18 @@ public class TaskScreen extends Activity {
             default: demo.priority = 1;break;
         }
 
-        Event e = Calendar.findTime(demo.duration, new Date(Long.MAX_VALUE), demo.label);
-        if(e == null)
+        Event e = Calendar.findTime(demo.duration, demo.dateTime, demo.label);
+        if(e == null){
             Log.d("", "is null");
-        demo.begin = e.getStartTime();
-        demo.end = e.getEndTime();
+            Toast.makeText(getApplicationContext(),"Conflict detected." , 1500).show();
+            return;
+        }
+        else
+        {
+            demo.begin = e.getStartTime();
+            demo.end = e.getEndTime();
+        }
+
         //Log.d("", );
         //Toast.makeText(getApplicationContext(), e.getDescription() + " " + e.getStartTime().toString() + " " + e.getEndTime().toString(), 5000).show();
         //RecyclerViewDemoApp.addItemToList(demo);
