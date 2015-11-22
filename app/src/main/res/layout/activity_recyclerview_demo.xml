@@ -32,6 +32,7 @@
         android:background="@drawable/ripple"
         android:stateListAnimator="@anim/anim"
         android:src="@drawable/ic_action_add"
+        android:backgroundTint="@color/accent"
         android:elevation="1dp" />
 </RelativeLayout>
 

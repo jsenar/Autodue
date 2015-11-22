@@ -19,7 +19,7 @@
         android:clickable="false"
         android:layout_margin="@dimen/activity_horizontal_margin"
         card_view:cardCornerRadius="5dp"
-        card_view:cardBackgroundColor="@color/accent">
+        card_view:cardBackgroundColor="#faf4fb">
 
         <include layout="@layout/common_item_layout" />
 
@@ -30,6 +30,7 @@
             android:onClick="removeItem"
             android:layout_gravity="bottom|right"
             android:layout_margin="8dp"
+            android:backgroundTint="#b45dc3"
             android:id="@+id/delete_button" />
 
     </android.support.v7.widget.CardView>
