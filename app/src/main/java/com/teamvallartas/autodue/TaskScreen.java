@@ -56,18 +56,24 @@ public class TaskScreen extends Activity {
     public void addTask(View view) throws ParseException {
         //Button button = (Button) findViewById(R.id.button1);
         demo = new DemoModel();
+
+        // Check name is filled
         demo.label = "";
         demo.label += ((EditText)findViewById(R.id.task_name_message)).getText().toString();
         if(demo.label == ""){
             Toast.makeText(getApplicationContext(),"Name must be specified!", 1500).show();
             return;
         }
+
+        // Set description and check that it is filled
         demo.description = "";
         demo.description += ((EditText)findViewById(R.id.description_name_message)).getText().toString();
         if(demo.description == ""){
             Toast.makeText(getApplicationContext(),"Description must be specified!", 1500).show();
             return;
         }
+
+        // Set duration and check that it is filled
         String dur = "";
         dur += ((EditText)findViewById(R.id.duration_time)).getText().toString();
         if(dur == ""){
@@ -76,25 +82,36 @@ public class TaskScreen extends Activity {
         }
         demo.duration = Long.parseLong(  dur , 10) * 1000 * 60 * 60;
 
-        // Get date
+        // Check due date is filled
         String dateString = "";
         dateString += ((EditText)findViewById(R.id.duedate)).getText().toString();
         if(dateString == ""){
             Toast.makeText(getApplicationContext(),"Due Date must be specified!", 1500).show();
             return;
         }
+
+        // Check time is filled
         String timeString = "";
         timeString += ((EditText)findViewById(R.id.duetime_hour)).getText().toString();
         if(timeString == ""){
             Toast.makeText(getApplicationContext(),"Time must be specified!", 1500).show();
             return;
         }
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
+        // Set due dateTime based on due date and time
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         String dateAndTime = dateString + " " + timeString;
         System.out.println(dateAndTime);
         Date dDate = df.parse(dateAndTime);
         demo.dateTime = dDate;
+
+        // Check error if duration exceeds difference between current time and end time
+        Date currentTime = new Date();
+        if(currentTime.getTime() + demo.duration > demo.dateTime.getTime())
+        {
+            Toast.makeText(getApplicationContext(),"There is not enough time between now and the deadline for this task." , 1500).show();
+            return;
+        }
 
         // Get priority
         Spinner mySpinner=(Spinner) findViewById(R.id.spinner1);
