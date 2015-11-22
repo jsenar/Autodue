@@ -40,7 +40,10 @@ public class CardViewDemoActivity extends Activity {
         TextView labelDuration = (TextView) cardView.findViewById(R.id.txt_duration);
         TextView labelPriority = (TextView) cardView.findViewById(R.id.txt_priority);
 
+        // Set task title
         label.setText(model.label);
+
+        // Set date
         String dateStr = DateUtils.formatDateTime(
                 this,
                 model.dateTime.getTime(),
@@ -48,9 +51,10 @@ public class CardViewDemoActivity extends Activity {
 
         long millis = System.currentTimeMillis();
         int hoursLeft = (int) ((model.dateTime.getTime() - millis)/(1000*60*60));
-
         dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
         labelDuration.setText("Time needed: " + model.duration/3600000 + " hours");
+
+        // Set priority
         String prioritySetting;
         switch(model.priority) {
             case 1: prioritySetting = "Low";break;
@@ -60,4 +64,16 @@ public class CardViewDemoActivity extends Activity {
         }
         labelPriority.setText("Priority: " + prioritySetting );
     }
+
+    public void removeItem(View view)  {
+
+        Bundle extras = getIntent().getExtras();
+        int id = extras.getInt(Constants.KEY_ID);
+        DemoModel model = RecyclerViewDemoApp.findById(id);
+
+        RecyclerViewDemoActivity.removeItemFromListUsingObject(model);
+
+        finish();
+    }
+
 }
