@@ -302,17 +302,17 @@ public class RecyclerViewDemoActivity
             return super.onSingleTapConfirmed(e);
         }
 
-        public void onLongPress(MotionEvent e) {
-            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
-            if (actionMode != null) {
-                return;
-            }
-            // Start the CAB using the ActionMode.Callback defined above
-            actionMode = startActionMode(RecyclerViewDemoActivity.this);
-            int idx = recyclerView.getChildPosition(view);
-            myToggleSelection(idx);
-            super.onLongPress(e);
-        }
+//        public void onLongPress(MotionEvent e) {
+//            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+//            if (actionMode != null) {
+//                return;
+//            }
+//            // Start the CAB using the ActionMode.Callback defined above
+//            actionMode = startActionMode(RecyclerViewDemoActivity.this);
+//            int idx = recyclerView.getChildPosition(view);
+//            myToggleSelection(idx);
+//            super.onLongPress(e);
+//        }
     }
 
     private void addDrawerItems() {

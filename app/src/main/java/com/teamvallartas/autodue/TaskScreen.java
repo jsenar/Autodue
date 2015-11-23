@@ -126,7 +126,12 @@ public class TaskScreen extends Activity {
 
         // Check error if duration exceeds difference between current time and end time
         Date currentTime = new Date();
-        if(currentTime.getTime() + demo.duration > demo.dateTime.getTime())
+        if(demo.dateTime.getTime() < currentTime.getTime())
+        {
+            Toast.makeText(getApplicationContext(),"You cannot create events in the past." , 1500).show();
+            return;
+        }
+        else if(currentTime.getTime() + demo.duration > demo.dateTime.getTime())
         {
             Toast.makeText(getApplicationContext(),"There is not enough time between now and the deadline for this task." , 1500).show();
             return;
