@@ -47,6 +47,7 @@ public class EventPopUp extends Activity{
 
 
     }
+    // adds event
     public void addEvent(View view){
         RecyclerViewDemoActivity.addItemToList(new DemoModel(TaskScreen.demo));
 

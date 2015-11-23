@@ -141,7 +141,7 @@ public class TaskScreen extends Activity {
             case "High": demo.priority = 3;break;
             default: demo.priority = 1;break;
         }
-
+        // find time for event
         Event e = Calendar.findTime(demo.duration, demo.dateTime, demo.label);
         if(e == null){
             Log.d("", "is null");
