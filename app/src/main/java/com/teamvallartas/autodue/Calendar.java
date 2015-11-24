@@ -7,7 +7,6 @@ import java.util.*;
 public class Calendar{
 	// Internal storage of events
 	static ArrayList<Event> myCalendar;
-
 	public Calendar(){
 		myCalendar = new ArrayList<Event>();
 	}

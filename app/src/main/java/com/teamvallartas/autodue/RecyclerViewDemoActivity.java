@@ -192,6 +192,7 @@ public class RecyclerViewDemoActivity
     public void onClick(View view) {
         if (view.getId() == R.id.fab_add) {
             // fab click
+
             getCalendarEvents();
             startActivity(new Intent(RecyclerViewDemoActivity.this, TaskScreen.class));
 
