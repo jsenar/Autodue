@@ -2,6 +2,7 @@ package com.teamvallartas.autodue;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.os.Bundle;
@@ -50,13 +51,18 @@ public class EventPopUp extends Activity{
     // adds event
     public void addEvent(View view){
         RecyclerViewDemoActivity.addItemToList(new TaskModel(TaskScreen.demo));
+        TaskModel a = createEvent(TaskScreen.demo, getContentResolver());
 
-        ContentResolver cr = getContentResolver();
+        RecyclerViewDemoActivity.items.add(new TaskModel(a));
+        finishPopup(view);
+    }
+    public static TaskModel createEvent(TaskModel task, ContentResolver cr){
+        //ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
 
-        values.put(CalendarContract.Events.DTSTART, TaskScreen.demo.begin.getTime());
-        values.put(CalendarContract.Events.TITLE, TaskScreen.demo.label);
-        values.put(CalendarContract.Events.DESCRIPTION, TaskScreen.demo.description);
+        values.put(CalendarContract.Events.DTSTART, task.begin.getTime());
+        values.put(CalendarContract.Events.TITLE, task.label);
+        values.put(CalendarContract.Events.DESCRIPTION, task.description);
 
         TimeZone timeZone = TimeZone.getDefault();
         values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
@@ -65,12 +71,20 @@ public class EventPopUp extends Activity{
         values.put(CalendarContract.Events.CALENDAR_ID, 1);
 
 
-        values.put(CalendarContract.Events.DTEND, TaskScreen.demo.end.getTime());
+        values.put(CalendarContract.Events.DTEND, task.end.getTime());
 
         // insert event to calendar
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
-        TaskScreen.demo.eventID = Long.parseLong(uri.getLastPathSegment());
-        RecyclerViewDemoActivity.items.add(new TaskModel(TaskScreen.demo));
-        finishPopup(view);
+        task.eventID = Long.parseLong(uri.getLastPathSegment());
+        return task;
+    }
+    public static void deleteEvent(TaskModel task, ContentResolver cr){
+        Long eventId = task.eventID;
+        //ContentResolver cr = getContentResolver();
+        ContentValues values = new ContentValues();
+        Uri deleteUri = null;
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
+        int rows = cr.delete(deleteUri,null,null);
+
     }
 }

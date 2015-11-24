@@ -19,6 +19,7 @@ public class Calendar{
 	public static void sort(){
 		Collections.sort(myCalendar);
 	}
+	public static void clear(){myCalendar = new ArrayList<Event>();}
 	//basic in order print
 	public void print(TextView m_text_event){
 

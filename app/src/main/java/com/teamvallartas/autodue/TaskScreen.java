@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.Collections;
 import java.util.Date;
 import android.app.Dialog;
 import android.widget.*;
@@ -145,7 +146,33 @@ public class TaskScreen extends Activity {
             default: demo.priority = 1;break;
         }
         // find time for event
-        Event e = Calendar.findTime(demo);
+        for(TaskModel task:RecyclerViewDemoActivity.items){
+            if(!task.locked){
+                // delete the event from calendar
+                EventPopUp.deleteEvent(task, getContentResolver());
+
+            }
+        }
+        Event e,temp;
+        e = new Event(new Date(), new Date(), "");
+        // readd all events
+        RecyclerViewDemoActivity.items.add(new TaskModel(demo));
+        Collections.sort(RecyclerViewDemoActivity.items);
+        for(TaskModel task:RecyclerViewDemoActivity.items){
+
+            temp = Calendar.findTime(task);
+            if(temp == null){
+                Toast.makeText(getApplicationContext(),"Uh oh." , 1500).show();
+            }
+            task.begin = temp.getStartTime();
+            task.end = temp.getEndTime();
+            if(demo.id == task.id){
+                e = temp;
+            }
+            EventPopUp.createEvent(task, getContentResolver());
+
+        }
+        //Event e = Calendar.findTime(demo);
         if(e == null){
             Log.d("", "is null");
             Toast.makeText(getApplicationContext(),"Conflict detected." , 1500).show();
