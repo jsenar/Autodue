@@ -174,7 +174,6 @@ public class TaskScreen extends Activity {
 
     }
     public void hidePopup(View view) {
-        //Button button = (Button) findViewById(R.id.button1);
         this.finish();
     }
 

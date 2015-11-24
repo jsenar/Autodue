@@ -323,13 +323,21 @@ public class RecyclerViewDemoActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                if(position == 0){
+                if(position == 0) {
                     DrawerLayout mDrawerLayout;
                     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                     mDrawerLayout.closeDrawers();
-                }else if(position == 1){
+                }
+                else if(position == 1){
                     openCalendar();
                 }
+                else if(position == 2){
+                    DrawerLayout mDrawerLayout;
+                    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    mDrawerLayout.closeDrawers();
+                    startActivity(new Intent(RecyclerViewDemoActivity.this, Settings.class));
+                }
+
             }
         });
 
