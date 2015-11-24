@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,16 +24,16 @@ public class RecyclerViewDemoAdapter
         extends RecyclerView.Adapter
                 <RecyclerViewDemoAdapter.ListItemViewHolder> {
 
-    private List<DemoModel> items;
+    private List<TaskModel> items;
     private SparseBooleanArray selectedItems;
-    private PriorityQueue<DemoModel> demoQueue = new PriorityQueue<DemoModel>(10, new Comparator<DemoModel>(){
-        public int compare(DemoModel m1, DemoModel m2)
+    private PriorityQueue<TaskModel> demoQueue = new PriorityQueue<TaskModel>(10, new Comparator<TaskModel>(){
+        public int compare(TaskModel m1, TaskModel m2)
         {
             return (m2.priority>m1.priority)?1:-1; // descending order
         }
     });
 
-    RecyclerViewDemoAdapter(List<DemoModel> modelData) {
+    RecyclerViewDemoAdapter(List<TaskModel> modelData) {
         if (modelData == null) {
             throw new IllegalArgumentException("modelData must not be null");
         }
@@ -51,7 +50,7 @@ public class RecyclerViewDemoAdapter
      * @param newModelData The item to add to the data set.
      * @param position The index of the item to remove.
      */
-    public void addData(DemoModel newModelData, int position) {
+    public void addData(TaskModel newModelData, int position) {
         items.add(position, newModelData);
         demoQueue.add(newModelData);
         notifyItemInserted(position);
@@ -73,12 +72,12 @@ public class RecyclerViewDemoAdapter
         notifyItemRemoved(position);
     }
 
-    public void removeDataUsingObject(DemoModel model)
+    public void removeDataUsingObject(TaskModel model)
     {
         items.remove(model);
     }
 
-    public DemoModel getItem(int position) {
+    public TaskModel getItem(int position) {
         return items.get(position);
     }
 
@@ -92,19 +91,19 @@ public class RecyclerViewDemoAdapter
 
     @Override
     public void onBindViewHolder(ListItemViewHolder viewHolder, int position) {
-        DemoModel model = items.get(position);
+        TaskModel model = items.get(position);
         viewHolder.label.setText(model.label);
 
         DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
-        String dateAndHours = df.format(model.dateTime);
+        String dateAndHours = df.format(model.deadline);
 
         String dateStr = DateUtils.formatDateTime(
                 viewHolder.label.getContext(),
-                model.dateTime.getTime(),
+                model.deadline.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
 
         long millis = System.currentTimeMillis();
-        int hoursLeft = (int) ((model.dateTime.getTime() - millis)/(1000*60*60));
+        int hoursLeft = (int) ((model.deadline.getTime() - millis)/(1000*60*60));
 
         viewHolder.colorIndicator.setImageResource(R.drawable.ic_brightness_1_white_24dp);
 

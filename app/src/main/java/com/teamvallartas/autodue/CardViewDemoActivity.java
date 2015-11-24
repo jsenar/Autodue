@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 public class CardViewDemoActivity extends Activity {
 
     CardView cardView;
-    static DemoModel rescheduleModel = new DemoModel();
+    static TaskModel rescheduleModel = new TaskModel();
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -34,7 +34,7 @@ public class CardViewDemoActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         int id = extras.getInt(Constants.KEY_ID);
-        DemoModel model = RecyclerViewDemoApp.findById(id);
+        TaskModel model = RecyclerViewDemoApp.findById(id);
 
         setContentView(R.layout.activity_cardview_demo);
         cardView = (CardView) findViewById(R.id.card_detail);
@@ -55,15 +55,15 @@ public class CardViewDemoActivity extends Activity {
 
         // Set date
         DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
-        String dateAndHours = df.format(model.dateTime);
+        String dateAndHours = df.format(model.deadline);
 
         String dateStr = DateUtils.formatDateTime(
                 this,
-                model.dateTime.getTime(),
+                model.deadline.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
 
         long millis = System.currentTimeMillis();
-        int hoursLeft = (int) ((model.dateTime.getTime() - millis)/(1000*60*60));
+        int hoursLeft = (int) ((model.deadline.getTime() - millis)/(1000*60*60));
 
         int color = Color.parseColor("#000000");
         int hoursInDay = 24;
@@ -97,7 +97,7 @@ public class CardViewDemoActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         int id = extras.getInt(Constants.KEY_ID);
-        DemoModel model = RecyclerViewDemoApp.findById(id);
+        TaskModel model = RecyclerViewDemoApp.findById(id);
 
         RecyclerViewDemoActivity.removeItemFromListUsingObject(model);
 
@@ -108,7 +108,7 @@ public class CardViewDemoActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         int id = extras.getInt(Constants.KEY_ID);
-        DemoModel model = RecyclerViewDemoApp.findById(id);
+        TaskModel model = RecyclerViewDemoApp.findById(id);
 
         rescheduleModel = model;
 

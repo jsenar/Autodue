@@ -49,7 +49,7 @@ public class EventPopUp extends Activity{
     }
     // adds event
     public void addEvent(View view){
-        RecyclerViewDemoActivity.addItemToList(new DemoModel(TaskScreen.demo));
+        RecyclerViewDemoActivity.addItemToList(new TaskModel(TaskScreen.demo));
 
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
@@ -69,7 +69,8 @@ public class EventPopUp extends Activity{
 
         // insert event to calendar
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
-
+        TaskScreen.demo.eventID = Long.parseLong(uri.getLastPathSegment());
+        RecyclerViewDemoActivity.items.add(new TaskModel(TaskScreen.demo));
         finishPopup(view);
     }
 }

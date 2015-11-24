@@ -11,9 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,7 +31,7 @@ import android.content.Intent;
  */
 public class TaskScreen extends Activity {
     static final int dialog_id= 0;
-    public static DemoModel demo = new DemoModel();
+    public static TaskModel demo = new TaskModel();
     int hour, minute;
 
     @Override
@@ -58,7 +56,7 @@ public class TaskScreen extends Activity {
 //            editDuration.setText(String.valueOf(d));
 
             // Reset this so that when you click FAB as usual you won't get previous cancelled values
-            CardViewDemoActivity.rescheduleModel = new DemoModel();
+            CardViewDemoActivity.rescheduleModel = new TaskModel();
         }
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -74,7 +72,7 @@ public class TaskScreen extends Activity {
 
     public void addTask(View view) throws ParseException {
         //Button button = (Button) findViewById(R.id.button1);
-        demo = new DemoModel();
+        demo = new TaskModel();
 
         // Check name is filled
         demo.label = "";
@@ -117,21 +115,21 @@ public class TaskScreen extends Activity {
             return;
         }
 
-        // Set due dateTime based on due date and time
+        // Set due deadline based on due date and time
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         String dateAndTime = dateString + " " + timeString;
         System.out.println(dateAndTime);
         Date dDate = df.parse(dateAndTime);
-        demo.dateTime = dDate;
+        demo.deadline = dDate;
 
         // Check error if duration exceeds difference between current time and end time
         Date currentTime = new Date();
-        if(demo.dateTime.getTime() < currentTime.getTime())
+        if(demo.deadline.getTime() < currentTime.getTime())
         {
             Toast.makeText(getApplicationContext(),"You cannot create events in the past." , 1500).show();
             return;
         }
-        else if(currentTime.getTime() + demo.duration > demo.dateTime.getTime())
+        else if(currentTime.getTime() + demo.duration > demo.deadline.getTime())
         {
             Toast.makeText(getApplicationContext(),"There is not enough time between now and the deadline for this task." , 1500).show();
             return;
@@ -147,7 +145,7 @@ public class TaskScreen extends Activity {
             default: demo.priority = 1;break;
         }
         // find time for event
-        Event e = Calendar.findTime(demo.duration, demo.dateTime, demo.label);
+        Event e = Calendar.findTime(demo);
         if(e == null){
             Log.d("", "is null");
             Toast.makeText(getApplicationContext(),"Conflict detected." , 1500).show();

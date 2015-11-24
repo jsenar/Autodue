@@ -1,6 +1,5 @@
 package com.teamvallartas.autodue;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.*;
@@ -37,12 +36,15 @@ public class Calendar{
 		//return l_str;
 	}
 	// algorithm for finding a time for the event. will return null  if cannot find a time
-	public static Event findTime(long length, Date deadline, String description){
+	public static Event findTime(TaskModel task){
+		long length = task.duration;
+		Date deadline = task.deadline;
+		String description = task.description;
 		Date now = new Date();
 		// initialize possible time slot as now
 		Event possibleTime = new Event(now,new Date(now.getTime()+ length), description);
 		Event iter;
-		for(int i = 0; i<myCalendar.size(); i++){
+		for(int i = 0; i < myCalendar.size(); i++){
 			// if past deadline uh oh
 			if(possibleTime.getEndTime().compareTo(deadline)>=0){
 				return null;
@@ -54,7 +56,7 @@ public class Calendar{
 				// try again
 				continue;
 			}
-			//if doesnt intersect
+			//if doesn't intersect
 			if(!iter.intersects(possibleTime)){
 				int j = i;
 				boolean collision = false;
