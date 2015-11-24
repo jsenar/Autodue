@@ -303,17 +303,17 @@ public class RecyclerViewDemoActivity
             return super.onSingleTapConfirmed(e);
         }
 
-        public void onLongPress(MotionEvent e) {
-            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
-            if (actionMode != null) {
-                return;
-            }
-            // Start the CAB using the ActionMode.Callback defined above
-            actionMode = startActionMode(RecyclerViewDemoActivity.this);
-            int idx = recyclerView.getChildPosition(view);
-            myToggleSelection(idx);
-            super.onLongPress(e);
-        }
+//        public void onLongPress(MotionEvent e) {
+//            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+//            if (actionMode != null) {
+//                return;
+//            }
+//            // Start the CAB using the ActionMode.Callback defined above
+//            actionMode = startActionMode(RecyclerViewDemoActivity.this);
+//            int idx = recyclerView.getChildPosition(view);
+//            myToggleSelection(idx);
+//            super.onLongPress(e);
+//        }
     }
 
     private void addDrawerItems() {
@@ -324,13 +324,21 @@ public class RecyclerViewDemoActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                if(position == 0){
+                if(position == 0) {
                     DrawerLayout mDrawerLayout;
                     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                     mDrawerLayout.closeDrawers();
-                }else if(position == 1){
+                }
+                else if(position == 1){
                     openCalendar();
                 }
+                else if(position == 2){
+                    DrawerLayout mDrawerLayout;
+                    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    mDrawerLayout.closeDrawers();
+                    startActivity(new Intent(RecyclerViewDemoActivity.this, Settings.class));
+                }
+
             }
         });
 
