@@ -2,6 +2,7 @@ package com.teamvallartas.autodue;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class EventPopUp extends Activity{
         ((TextView)findViewById(R.id.EventDescription)).setText(TaskScreen.demo.description);
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
-                ((TextView) findViewById(R.id.TimeString)).setText(df.format(TaskScreen.demo.begin) + " - " + df.format(TaskScreen.demo.end));
+        ((TextView) findViewById(R.id.TimeString)).setText(df.format(TaskScreen.demo.begin) + " - " + df.format(TaskScreen.demo.end));
     }
     public void finishPopup(View view) {
         this.finish();
@@ -47,15 +48,21 @@ public class EventPopUp extends Activity{
 
 
     }
+    // adds event
     public void addEvent(View view){
-        RecyclerViewDemoActivity.addItemToList(new DemoModel(TaskScreen.demo));
 
-        ContentResolver cr = getContentResolver();
+        TaskModel a = createEvent(new TaskModel(TaskScreen.demo), getContentResolver());
+        RecyclerViewDemoActivity.addItemToList(a);
+        //RecyclerViewDemoActivity.items.add(new TaskModel(a));
+        finishPopup(view);
+    }
+    public static TaskModel createEvent(TaskModel task, ContentResolver cr){
+        //ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
 
-        values.put(CalendarContract.Events.DTSTART, TaskScreen.demo.begin.getTime());
-        values.put(CalendarContract.Events.TITLE, TaskScreen.demo.label);
-        values.put(CalendarContract.Events.DESCRIPTION, TaskScreen.demo.description);
+        values.put(CalendarContract.Events.DTSTART, task.begin.getTime());
+        values.put(CalendarContract.Events.TITLE, task.label);
+        values.put(CalendarContract.Events.DESCRIPTION, task.description);
 
         TimeZone timeZone = TimeZone.getDefault();
         values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
@@ -64,11 +71,22 @@ public class EventPopUp extends Activity{
         values.put(CalendarContract.Events.CALENDAR_ID, 1);
 
 
-        values.put(CalendarContract.Events.DTEND, TaskScreen.demo.end.getTime());
+        values.put(CalendarContract.Events.DTEND, task.end.getTime());
 
         // insert event to calendar
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+        task.eventID = Long.parseLong(uri.getLastPathSegment());
+        return task;
+    }
+    public static void deleteEvent(TaskModel task, ContentResolver cr){
+        if(task.eventID == null)
+            return;
+        Long eventId = task.eventID;
+        //ContentResolver cr = getContentResolver();
+        ContentValues values = new ContentValues();
+        Uri deleteUri = null;
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
+        int rows = cr.delete(deleteUri,null,null);
 
-        finishPopup(view);
     }
 }

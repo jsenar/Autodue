@@ -2,13 +2,18 @@ package com.teamvallartas.autodue;
 
 import java.util.*;
 public class Event implements Comparable<Event>{
-	private Date startTime;
-	private Date endTime;
-	private String eventDescription;
+	Date startTime;
+	Date endTime;
+	String eventDescription;
 	public Event(Date start, Date end, String description){
 		startTime = start;
 		endTime = end;
 		eventDescription = description;
+	}
+	public Event(Event a){
+		startTime = a.startTime;
+		endTime = a.endTime;
+		eventDescription = a.eventDescription;
 	}
 	public Date getStartTime(){
 		return startTime;

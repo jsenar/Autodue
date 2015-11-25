@@ -8,7 +8,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,10 +18,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.ChangeTransform;
-import android.util.Log;
 import android.view.ActionMode;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,15 +32,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
-import android.view.Gravity;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import static android.view.GestureDetector.SimpleOnGestureListener;
 
@@ -60,6 +55,7 @@ public class RecyclerViewDemoActivity
     com.teamvallartas.autodue.Calendar myCalendar;
     static RecyclerView recyclerView;
     static RecyclerViewDemoAdapter adapter;
+    static List<TaskModel> items;
     static int itemCount;
     GestureDetectorCompat gestureDetector;
     ActionMode actionMode;
@@ -101,7 +97,8 @@ public class RecyclerViewDemoActivity
         recyclerView.setHasFixedSize(true);
 
         // IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        List<DemoModel> items = RecyclerViewDemoApp.getDemoData();
+        //items = RecyclerViewDemoApp.getDemoData();
+        items = new ArrayList<TaskModel>();
         adapter = new RecyclerViewDemoAdapter(items);
         recyclerView.setAdapter(adapter);
 
@@ -131,14 +128,12 @@ public class RecyclerViewDemoActivity
         checkPastEvents(items);
     }
 
-    private void checkPastEvents(List<DemoModel> items)
+    private void checkPastEvents(List<TaskModel> items)
     {
         Date d = new Date();
-        System.out.println("size of items list is: " + items.size());
         for(int i=0; i<items.size(); i++)
         {
-            System.out.println(items.get(i).getDateTime().getTime());
-            if(items.get(i).getDateTime().getTime()< d.getTime())
+            if(items.get(i).getDeadline().getTime()< d.getTime())
             {
                 Toast.makeText(getApplicationContext(), items.get(i).getLabel() + " is overdue", Toast.LENGTH_SHORT).show();
             }
@@ -161,8 +156,8 @@ public class RecyclerViewDemoActivity
         return true;
     }
     //TODO model needs to pass in values of the popup
-    public static void addItemToList(DemoModel model) {
-        //DemoModel model = new DemoModel();
+    public static void addItemToList(TaskModel model) {
+        //TaskModel model = new TaskModel();
         //model.label = "New Task " + itemCount;
         itemCount++;
         int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).
@@ -184,11 +179,20 @@ public class RecyclerViewDemoActivity
         adapter.removeData(position);
     }*/
 
+    public static void removeItemFromListUsingObject(TaskModel model){
+        adapter.removeDataUsingObject(model);
+        adapter.sort();
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View view) {
+        if(view == null){
+            return;
+        }
         if (view.getId() == R.id.fab_add) {
             // fab click
+
             getCalendarEvents();
             startActivity(new Intent(RecyclerViewDemoActivity.this, TaskScreen.class));
 
@@ -204,7 +208,7 @@ public class RecyclerViewDemoActivity
                 myToggleSelection(idx);
                 return;
             }
-            DemoModel data = adapter.getItem(idx);
+            TaskModel data = adapter.getItem(idx);
             View innerContainer = view.findViewById(R.id.container_inner_item);
             innerContainer.setTransitionName(Constants.NAME_INNER_CONTAINER + "_" + data.id);
             Intent startIntent = new Intent(this, CardViewDemoActivity.class);
@@ -299,17 +303,17 @@ public class RecyclerViewDemoActivity
             return super.onSingleTapConfirmed(e);
         }
 
-        public void onLongPress(MotionEvent e) {
-            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
-            if (actionMode != null) {
-                return;
-            }
-            // Start the CAB using the ActionMode.Callback defined above
-            actionMode = startActionMode(RecyclerViewDemoActivity.this);
-            int idx = recyclerView.getChildPosition(view);
-            myToggleSelection(idx);
-            super.onLongPress(e);
-        }
+//        public void onLongPress(MotionEvent e) {
+//            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+//            if (actionMode != null) {
+//                return;
+//            }
+//            // Start the CAB using the ActionMode.Callback defined above
+//            actionMode = startActionMode(RecyclerViewDemoActivity.this);
+//            int idx = recyclerView.getChildPosition(view);
+//            myToggleSelection(idx);
+//            super.onLongPress(e);
+//        }
     }
 
     private void addDrawerItems() {
@@ -320,13 +324,21 @@ public class RecyclerViewDemoActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                if(position == 0){
+                if(position == 0) {
                     DrawerLayout mDrawerLayout;
                     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                     mDrawerLayout.closeDrawers();
-                }else if(position == 1){
+                }
+                else if(position == 1){
                     openCalendar();
                 }
+                else if(position == 2){
+                    DrawerLayout mDrawerLayout;
+                    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    mDrawerLayout.closeDrawers();
+                    startActivity(new Intent(RecyclerViewDemoActivity.this, Settings.class));
+                }
+
             }
         });
 
@@ -342,6 +354,7 @@ public class RecyclerViewDemoActivity
         startActivity(intent);
     }
     private void getCalendarEvents(){
+        com.teamvallartas.autodue.Calendar.clear();
         //String DEBUG_TAG = "MyActivity";
         String[] INSTANCE_PROJECTION = new String[] {
                 CalendarContract.Instances.EVENT_ID,      // 0

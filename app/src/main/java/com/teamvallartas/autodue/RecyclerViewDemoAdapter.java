@@ -1,15 +1,19 @@
 package com.teamvallartas.autodue;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,16 +24,16 @@ public class RecyclerViewDemoAdapter
         extends RecyclerView.Adapter
                 <RecyclerViewDemoAdapter.ListItemViewHolder> {
 
-    private List<DemoModel> items;
+    private List<TaskModel> items;
     private SparseBooleanArray selectedItems;
-    private PriorityQueue<DemoModel> demoQueue = new PriorityQueue<DemoModel>(10, new Comparator<DemoModel>(){
-        public int compare(DemoModel m1, DemoModel m2)
+    private PriorityQueue<TaskModel> demoQueue = new PriorityQueue<TaskModel>(10, new Comparator<TaskModel>(){
+        public int compare(TaskModel m1, TaskModel m2)
         {
             return (m2.priority>m1.priority)?1:-1; // descending order
         }
     });
 
-    RecyclerViewDemoAdapter(List<DemoModel> modelData) {
+    RecyclerViewDemoAdapter(List<TaskModel> modelData) {
         if (modelData == null) {
             throw new IllegalArgumentException("modelData must not be null");
         }
@@ -46,7 +50,7 @@ public class RecyclerViewDemoAdapter
      * @param newModelData The item to add to the data set.
      * @param position The index of the item to remove.
      */
-    public void addData(DemoModel newModelData, int position) {
+    public void addData(TaskModel newModelData, int position) {
         items.add(position, newModelData);
         demoQueue.add(newModelData);
         notifyItemInserted(position);
@@ -68,7 +72,12 @@ public class RecyclerViewDemoAdapter
         notifyItemRemoved(position);
     }
 
-    public DemoModel getItem(int position) {
+    public void removeDataUsingObject(TaskModel model)
+    {
+        items.remove(model);
+    }
+
+    public TaskModel getItem(int position) {
         return items.get(position);
     }
 
@@ -82,17 +91,37 @@ public class RecyclerViewDemoAdapter
 
     @Override
     public void onBindViewHolder(ListItemViewHolder viewHolder, int position) {
-        DemoModel model = items.get(position);
+        TaskModel model = items.get(position);
         viewHolder.label.setText(model.label);
+
+        DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
+        String dateAndHours = df.format(model.deadline);
+
         String dateStr = DateUtils.formatDateTime(
                 viewHolder.label.getContext(),
-                model.dateTime.getTime(),
+                model.deadline.getTime(),
                 DateUtils.FORMAT_ABBREV_ALL);
 
         long millis = System.currentTimeMillis();
-        int hoursLeft = (int) ((model.dateTime.getTime() - millis)/(1000*60*60));
+        int hoursLeft = (int) ((model.deadline.getTime() - millis)/(1000*60*60));
 
-        viewHolder.dateTime.setText("Due " + dateStr + " (" + hoursLeft + " hours left)");
+        viewHolder.colorIndicator.setImageResource(R.drawable.ic_brightness_1_white_24dp);
+
+        int color = Color.parseColor("#000000");
+        int hoursInDay = 24;
+
+        if (hoursLeft <= 0) {}
+        else if(hoursLeft < hoursInDay) {color = Color.parseColor("#f04141");}
+        else if (hoursLeft < hoursInDay*2) {color = Color.parseColor("#eb553b");}
+        else if (hoursLeft < hoursInDay*3) {color = Color.parseColor("#eb6336");}
+        else if (hoursLeft < hoursInDay*4) {color = Color.parseColor("#fc7e3f");}
+        else if (hoursLeft < hoursInDay*5) {color = Color.parseColor("#fa9837");}
+        else if (hoursLeft < hoursInDay*6) {color = Color.parseColor("#faad32");}
+        else {color = Color.parseColor("#ffdb38");}
+
+        viewHolder.colorIndicator.setColorFilter(color);
+
+        viewHolder.dateTime.setText("Due " + dateAndHours + " (" + hoursLeft + " hours left)");
         viewHolder.durationText.setText("Time needed: " + model.duration/3600000 + " hours");
         String prioritySetting;
         switch(model.priority) {
@@ -142,9 +171,12 @@ public class RecyclerViewDemoAdapter
         TextView dateTime;
         TextView priorityText;
         TextView durationText;
+        ImageView colorIndicator;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
+
+            colorIndicator = (ImageView) itemView.findViewById(R.id.color_indicator);
             label = (TextView) itemView.findViewById(R.id.txt_label_item);
             dateTime = (TextView) itemView.findViewById(R.id.txt_date_time);
             priorityText = (TextView) itemView.findViewById(R.id.txt_priority);

@@ -9,8 +9,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
     tools:context=".RecyclerViewDemoActivity">
@@ -34,6 +32,7 @@
         android:background="@drawable/ripple"
         android:stateListAnimator="@anim/anim"
         android:src="@drawable/ic_action_add"
+        android:backgroundTint="@color/accent"
         android:elevation="1dp" />
 </RelativeLayout>
 
