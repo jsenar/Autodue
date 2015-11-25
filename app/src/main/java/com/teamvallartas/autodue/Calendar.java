@@ -6,6 +6,7 @@ import java.util.*;
 public class Calendar{
 	// Internal storage of events
 	static ArrayList<Event> myCalendar;
+	private static int startHr, startMin, endHr, endMin;
 	public Calendar(){
 		myCalendar = new ArrayList<Event>();
 	}
@@ -20,6 +21,16 @@ public class Calendar{
 		Collections.sort(myCalendar);
 	}
 	public static void clear(){myCalendar = new ArrayList<Event>();}
+
+	public static void setOffLimitsStart(int hr, int min){
+		startHr = hr;
+		startMin = min;
+	}
+
+	public static void setOffLimitsEnd(int hr, int min){
+		endHr = hr;
+		endMin = min;
+	}
 	//basic in order print
 	public void print(TextView m_text_event){
 
@@ -36,6 +47,8 @@ public class Calendar{
 		m_text_event.setText(l_str);
 		//return l_str;
 	}
+
+	@SuppressWarnings("deprecation")
 	// algorithm for finding a time for the event. will return null  if cannot find a time
 	public static Event findTime(TaskModel task){
 		long length = task.duration;
@@ -80,8 +93,12 @@ public class Calendar{
 			}
 			//set possible time to directly after the next event
 			iter = myCalendar.get(i);
-			possibleTime.setStartingTime(iter.getEndTime().getTime()+1);
+			possibleTime.setStartingTime(iter.getEndTime().getTime() + 1);
 			possibleTime.setEndingTime(iter.getEndTime().getTime() + length);
+			if (possibleTime.getStartTime().getHours() >= startHr && possibleTime.getStartTime().getHours() <= endHr){
+				possibleTime.getStartTime().setHours(endHr);
+				possibleTime.getEndTime().setHours(endHr + possibleTime.getDuration());
+			}
 		}
 		return possibleTime;
 }

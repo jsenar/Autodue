@@ -18,7 +18,7 @@ import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 public class Settings extends Activity {
     static final int dialog_id1= 1;
     static final int dialog_id2= 2;
-    int hour, minute;
+    int starthr, startmin, endhr, endmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public class Settings extends Activity {
     @SuppressWarnings("deprecation")
     protected Dialog onCreateDialog(int id){
         switch(id){
-            case dialog_id1: return new TimePickerDialog(this, mTimeSetListener1, hour, minute, false);
-            case dialog_id2: return new TimePickerDialog(this, mTimeSetListener2, hour, minute, false);
+            case dialog_id1: return new TimePickerDialog(this, mTimeSetListener1, starthr, startmin, false);
+            case dialog_id2: return new TimePickerDialog(this, mTimeSetListener2, endhr, endmin, false);
         }
         return null;
     }
@@ -55,18 +55,19 @@ public class Settings extends Activity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener1 = new TimePickerDialog.OnTimeSetListener (){
         @Override
         public void onTimeSet (TimePicker view, int hourOfDay, int hour_minute){
-            hour = hourOfDay;
-            minute = hour_minute;
-            String str_hour = ""+hour;
-            String str_min = ""+minute;
-            if( hour < 10 )
-                str_hour = "0" + hour;
-            if( minute < 10 )
-                str_min = "0" + minute;
+            starthr = hourOfDay;
+            startmin = hour_minute;
+            String str_hour = ""+starthr;
+            String str_min = ""+startmin;
+            if( starthr < 10 )
+                str_hour = "0" + starthr;
+            if( startmin < 10 )
+                str_min = "0" + startmin;
 
             String settledTime = str_hour + ":" + str_min;
             EditText txt = (EditText) findViewById(R.id.starttime);
             txt.setText(settledTime);
+            com.teamvallartas.autodue.Calendar.setOffLimitsStart(starthr,startmin);
 
         }
 
@@ -75,18 +76,19 @@ public class Settings extends Activity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener2 = new TimePickerDialog.OnTimeSetListener (){
         @Override
         public void onTimeSet (TimePicker view, int hourOfDay, int hour_minute){
-            hour = hourOfDay;
-            minute = hour_minute;
-            String str_hour = ""+hour;
-            String str_min = ""+minute;
-            if( hour < 10 )
-                str_hour = "0" + hour;
-            if( minute < 10 )
-                str_min = "0" + minute;
+            endhr = hourOfDay;
+            endmin = hour_minute;
+            String str_hour = ""+endhr;
+            String str_min = ""+endmin;
+            if( endhr< 10 )
+                str_hour = "0" + endhr;
+            if( endmin< 10 )
+                str_min = "0" + endmin;
 
             String settledTime = str_hour + ":" + str_min;
             EditText txt = (EditText) findViewById(R.id.endtime);
             txt.setText(settledTime);
+            com.teamvallartas.autodue.Calendar.setOffLimitsEnd(endhr, endmin);
         }
 
     };

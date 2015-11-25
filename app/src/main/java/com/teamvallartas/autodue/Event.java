@@ -5,16 +5,22 @@ public class Event implements Comparable<Event>{
 	Date startTime;
 	Date endTime;
 	String eventDescription;
+	int duration;
+	@SuppressWarnings("deprecation")
 	public Event(Date start, Date end, String description){
 		startTime = start;
 		endTime = end;
 		eventDescription = description;
+		duration = endTime.getHours() - startTime.getHours();
 	}
+	@SuppressWarnings("deprecation")
 	public Event(Event a){
 		startTime = a.startTime;
 		endTime = a.endTime;
 		eventDescription = a.eventDescription;
+		duration = a.duration;
 	}
+	public int getDuration(){return duration;}
 	public Date getStartTime(){
 		return startTime;
 	}
