@@ -136,7 +136,8 @@
         android:layout_toLeftOf="@+id/cancel_button"
         android:layout_toStartOf="@+id/cancel_button"
         android:background="@color/pink1"
-        />
+        android:onClick="showTimePicker1"
+        android:focusable="false" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -148,7 +149,8 @@
         android:layout_alignRight="@+id/starttime"
         android:layout_alignEnd="@+id/starttime"
         android:background="@color/pink1"
-        />
+        android:onClick="showTimePicker2"
+        android:focusable="false" />
 
     <Button
         android:layout_width="wrap_content"
