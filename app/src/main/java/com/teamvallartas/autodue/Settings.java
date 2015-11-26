@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +26,13 @@ public class Settings extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_screen);
 
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+
+        getWindow().setLayout((int) (width), (int) (height*0.80));
     }
 
     public void closePopUp(View view){
