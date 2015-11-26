@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
+import android.widget.TextView;
 
 /**
  * Created by evahuynh on 11/23/15.
@@ -19,7 +20,7 @@ import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 public class Settings extends Activity {
     static final int dialog_id1= 1;
     static final int dialog_id2= 2;
-    int starthr, startmin, endhr, endmin;
+    static int starthr, startmin, endhr, endmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,9 @@ public class Settings extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width), (int) (height*0.80));
+        getWindow().setLayout((int) (width), (int) (height * 0.80));
+        updateCurrentOffLimit();
+
     }
 
     public void closePopUp(View view){
@@ -65,16 +68,11 @@ public class Settings extends Activity {
         public void onTimeSet (TimePicker view, int hourOfDay, int hour_minute){
             starthr = hourOfDay;
             startmin = hour_minute;
-            String str_hour = ""+starthr;
-            String str_min = ""+startmin;
-            if( starthr < 10 )
-                str_hour = "0" + starthr;
-            if( startmin < 10 )
-                str_min = "0" + startmin;
 
-            String settledTime = str_hour + ":" + str_min;
+            String settledTime = fixTimeString(starthr, startmin);
             EditText txt = (EditText) findViewById(R.id.starttime);
             txt.setText(settledTime);
+            updateCurrentOffLimit();
             com.teamvallartas.autodue.Calendar.setOffLimitsStart(starthr,startmin);
 
         }
@@ -86,19 +84,33 @@ public class Settings extends Activity {
         public void onTimeSet (TimePicker view, int hourOfDay, int hour_minute){
             endhr = hourOfDay;
             endmin = hour_minute;
-            String str_hour = ""+endhr;
-            String str_min = ""+endmin;
-            if( endhr< 10 )
-                str_hour = "0" + endhr;
-            if( endmin< 10 )
-                str_min = "0" + endmin;
 
-            String settledTime = str_hour + ":" + str_min;
+            String settledTime = fixTimeString(endhr, endmin);
+
             EditText txt = (EditText) findViewById(R.id.endtime);
             txt.setText(settledTime);
+            updateCurrentOffLimit();
             com.teamvallartas.autodue.Calendar.setOffLimitsEnd(endhr, endmin);
         }
 
     };
+
+    private void updateCurrentOffLimit(){
+        EditText txt = (EditText) findViewById (R.id.current_offlimit_time);
+        if (starthr==endhr&&startmin==endmin)
+            txt.setText(" [None]");
+        else
+            txt.setText(" "+fixTimeString(starthr, startmin)+" - "+fixTimeString(endhr,endmin));
+    }
+
+    private String fixTimeString( int hr, int min ){
+        String str_hour = ""+hr;
+        String str_min = ""+min;
+        if( hr < 10 )
+            str_hour = "0" + hr;
+        if( min < 10 )
+            str_min = "0" + min;
+        return str_hour+":"+str_min;
+    }
 
 }
