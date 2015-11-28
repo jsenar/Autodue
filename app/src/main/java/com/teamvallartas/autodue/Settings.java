@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
@@ -13,6 +15,7 @@ import android.widget.TimePicker;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by evahuynh on 11/23/15.
@@ -21,6 +24,12 @@ public class Settings extends Activity {
     static final int dialog_id1= 1;
     static final int dialog_id2= 2;
     static int starthr, startmin, endhr, endmin;
+    public static final String OfflinePREFERENCES = "MyPrefs" ;
+    public static final String StartHr = "StartHr";
+    public static final String StartMin = "StartMin";
+    public static final String EndHr = "EndHour";
+    public static final String EndMin = "EndMin";
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +43,26 @@ public class Settings extends Activity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width), (int) (height * 0.80));
-        updateCurrentOffLimit();
-
+        getOffLimit();
     }
 
     public void closePopUp(View view){
         this.finish();
     }
+
+    public void setOffLimit(View view){
+        sharedpreferences = getSharedPreferences(OfflinePREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(EndHr, endhr);
+        editor.putInt(EndMin, endmin);
+        editor.putInt(StartHr, starthr);
+        editor.putInt(StartMin, startmin);
+        editor.commit();
+
+        Toast.makeText(getApplicationContext(), "Off-limit time set to: "+fixTimeString(starthr, startmin)+" - "+fixTimeString(endhr,endmin), Toast.LENGTH_SHORT).show();
+        this.finish();
+    }
+
 
     @SuppressWarnings("deprecation")
     public void showTimePicker1(View view){
@@ -72,7 +94,6 @@ public class Settings extends Activity {
             String settledTime = fixTimeString(starthr, startmin);
             EditText txt = (EditText) findViewById(R.id.starttime);
             txt.setText(settledTime);
-            updateCurrentOffLimit();
             com.teamvallartas.autodue.Calendar.setOffLimitsStart(starthr,startmin);
 
         }
@@ -89,14 +110,20 @@ public class Settings extends Activity {
 
             EditText txt = (EditText) findViewById(R.id.endtime);
             txt.setText(settledTime);
-            updateCurrentOffLimit();
             com.teamvallartas.autodue.Calendar.setOffLimitsEnd(endhr, endmin);
         }
 
     };
 
-    private void updateCurrentOffLimit(){
+    private void getOffLimit(){
         EditText txt = (EditText) findViewById (R.id.current_offlimit_time);
+
+        SharedPreferences prefs = getSharedPreferences(OfflinePREFERENCES, MODE_PRIVATE);
+        starthr = prefs.getInt(StartHr, 0);
+        startmin = prefs.getInt(StartMin, 0);
+        endhr = prefs.getInt(EndHr, 0);
+        endmin = prefs.getInt(EndMin, 0);
+
         if (starthr==endhr&&startmin==endmin)
             txt.setText(" [None]");
         else
