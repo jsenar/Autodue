@@ -31,15 +31,32 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
+import org.joda.time.DateTime;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.ByteBuffer;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 import static android.view.GestureDetector.SimpleOnGestureListener;
 
@@ -60,7 +77,7 @@ public class RecyclerViewDemoActivity
     GestureDetectorCompat gestureDetector;
     ActionMode actionMode;
     ImageButton fab;
-    Context mContext;
+    static Context mContext;
     PopupWindow popOver;
 
     //popup items
@@ -126,6 +143,9 @@ public class RecyclerViewDemoActivity
         addDrawerItems();
 
         checkPastEvents(items);
+
+
+
     }
 
     private void checkPastEvents(List<TaskModel> items)
@@ -155,7 +175,6 @@ public class RecyclerViewDemoActivity
         }
         return true;
     }
-    //TODO model needs to pass in values of the popup
     public static void addItemToList(TaskModel model) {
         //TaskModel model = new TaskModel();
         //model.label = "New Task " + itemCount;
@@ -170,6 +189,10 @@ public class RecyclerViewDemoActivity
         RecyclerViewDemoApp.addItemToList(model);
         adapter.addData(model, position);
 
+            bw.write("\n");
+            bw.write("\n");
+            bw.write("\n");
+            bw.write("\n");
     }
 
     /*private void removeItemFromList() {
