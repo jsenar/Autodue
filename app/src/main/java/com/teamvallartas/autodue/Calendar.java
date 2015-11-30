@@ -5,7 +5,7 @@ import android.widget.TextView;
 import java.util.*;
 public class Calendar{
 	// Internal storage of events
-	static ArrayList<Event> myCalendar;
+	public static ArrayList<Event> myCalendar;
 	private static int startHr, startMin, endHr, endMin;
 	public Calendar(){
 		myCalendar = new ArrayList<Event>();
@@ -31,6 +31,19 @@ public class Calendar{
 		endHr = hr;
 		endMin = min;
 	}
+	public static void delete(TaskModel task){
+		Event e;
+		for(int i = 0; i < myCalendar.size(); i++){
+			e = myCalendar.get(i);
+			if(task.description == null||task.begin == null||task.end == null){
+				continue;
+			}
+			if(task.description == e.eventDescription && task.begin.equals(e.startTime) && task.end.equals(e.endTime)){
+				myCalendar.remove(e);
+				return;
+			}
+		}
+	}
 	//basic in order print
 	public void print(TextView m_text_event){
 
@@ -54,9 +67,9 @@ public class Calendar{
 		long length = task.duration;
 		Date deadline = task.deadline;
 		String description = task.description;
-		System.out.println(length);
-		System.out.println(deadline.toString());
-		System.out.println(description);
+//		System.out.println(length);
+//		System.out.println(deadline.toString());
+//		System.out.println(description);
 		Date now = new Date();
 		// initialize possible time slot as now
 		Event possibleTime = new Event(now,new Date(now.getTime()+ length), description);

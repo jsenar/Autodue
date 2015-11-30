@@ -79,14 +79,17 @@ public class EventPopUp extends Activity{
         return task;
     }
     public static void deleteEvent(TaskModel task, ContentResolver cr){
+
         if(task.eventID == null)
             return;
+        Calendar.delete(task);
         Long eventId = task.eventID;
         //ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
         Uri deleteUri = null;
         deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
         int rows = cr.delete(deleteUri,null,null);
+
 
     }
 }

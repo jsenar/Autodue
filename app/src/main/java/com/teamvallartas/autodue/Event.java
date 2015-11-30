@@ -6,6 +6,7 @@ public class Event implements Comparable<Event>{
 	Date endTime;
 	String eventDescription;
 	int duration;
+
 	@SuppressWarnings("deprecation")
 	public Event(Date start, Date end, String description){
 		startTime = start;
