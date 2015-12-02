@@ -39,7 +39,7 @@
         </activity>
 
         <activity android:name="com.teamvallartas.autodue.EventPopUp"></activity>
-        <activity android:name="com.teamvallartas.autodue.Settings"></activity>
+        <activity android:name="com.teamvallartas.autodue.Settings" android:label="Settings"></activity>
 
         <service android:name="com.teamvallartas.autodue.NotificationClass" />
 
