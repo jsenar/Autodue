@@ -166,6 +166,15 @@ public class RecyclerViewDemoAdapter
         return items;
     }
 
+    // For updating file when items are deleted
+    public List<TaskModel> getAllItems(){
+        return items;
+    }
+
+    public int getSize() {
+        return items.size();
+    }
+
     public final static class ListItemViewHolder extends RecyclerView.ViewHolder {
         TextView label;
         TextView dateTime;
