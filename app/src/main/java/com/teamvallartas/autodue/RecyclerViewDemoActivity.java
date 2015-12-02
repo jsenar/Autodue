@@ -143,11 +143,11 @@ public class RecyclerViewDemoActivity
         readFromFile();
 
         // Make notifications
-        setNotification();
+        checkNotification();
     }
 
     // Notification
-    public void setNotification()
+    public void checkNotification()
     {
         if(adapter.getSize()!=0)
         {

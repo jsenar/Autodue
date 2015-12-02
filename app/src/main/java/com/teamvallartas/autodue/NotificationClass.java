@@ -26,6 +26,8 @@ public class NotificationClass extends Service {
                 .setContentText("Mark as done or reschedule it")
                 .setContentIntent(pIntent)
                 .setSmallIcon(R.drawable.ic_stat_name)
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
                 .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
