@@ -71,6 +71,8 @@ public class RecyclerViewDemoActivity
     static Context mContext;
     PopupWindow popOver;
 
+    static String AUTODUEFILE = "AUTODUEFile";
+
     //popup items
 
 
@@ -145,7 +147,7 @@ public class RecyclerViewDemoActivity
         // For now only processes one TaskModel
         FileInputStream fin = null;
         try{
-            fin = mContext.getApplicationContext().openFileInput("TaskList");
+            fin = mContext.getApplicationContext().openFileInput(AUTODUEFILE);
 
             String result="";
             int content;
@@ -160,8 +162,8 @@ public class RecyclerViewDemoActivity
             fin.close();
 
             // Get string size for debug
-            System.out.println("No. of split elements:  " + split.length);
-            System.out.println("No. of loops:: " + split.length/8);
+//            System.out.println("No. of split elements:  " + split.length);
+//            System.out.println("No. of loops:: " + split.length/8);
 
             // Create model for contents
             for(int i=0; i<split.length/8; i++)
@@ -253,11 +255,19 @@ public class RecyclerViewDemoActivity
         adapter.addData(model, position);
 
         // After adding to adapter, also add to file
+        addToFile(model);
+
+    }
+
+    // Appends to file the model that is input as parameter
+    static void addToFile(TaskModel model){
+
         try{
-            FileOutputStream fos = mContext.getApplicationContext().openFileOutput("TaskList", Context.MODE_APPEND);
+            FileOutputStream fos = mContext.getApplicationContext().openFileOutput(AUTODUEFILE, Context.MODE_APPEND);
 
             // Writing TaskModel's attributes separated by newlines
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"),8192);
+
             bw.write(model.label);
             bw.write("\n");
             bw.write(model.description);
@@ -291,9 +301,27 @@ public class RecyclerViewDemoActivity
         adapter.removeData(position);
     }*/
 
+    // Asides from removing from adapter, also updates file
     public static void removeItemFromListUsingObject(TaskModel model){
         adapter.removeDataUsingObject(model);
         adapter.sort();
+
+        // Empty the file then readd items in adapter List
+        try{
+            FileOutputStream fos = mContext.getApplicationContext().openFileOutput(AUTODUEFILE, Context.MODE_PRIVATE);
+            fos.write(new String().getBytes());
+            fos.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        // Get updated adapter list so we can re add to file
+        List<TaskModel> toReAdd = adapter.getAllItems();
+        for(int i=0; i<toReAdd.size(); i++)
+        {
+            addToFile(toReAdd.get(i));
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -414,18 +442,6 @@ public class RecyclerViewDemoActivity
             onClick(view);
             return super.onSingleTapConfirmed(e);
         }
-
-//        public void onLongPress(MotionEvent e) {
-//            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
-//            if (actionMode != null) {
-//                return;
-//            }
-//            // Start the CAB using the ActionMode.Callback defined above
-//            actionMode = startActionMode(RecyclerViewDemoActivity.this);
-//            int idx = recyclerView.getChildPosition(view);
-//            myToggleSelection(idx);
-//            super.onLongPress(e);
-//        }
     }
 
     private void addDrawerItems() {
