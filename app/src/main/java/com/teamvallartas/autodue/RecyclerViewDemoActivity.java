@@ -36,19 +36,11 @@ import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
-import org.joda.time.DateTime;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
 
 import static android.view.GestureDetector.SimpleOnGestureListener;
 
@@ -144,8 +135,79 @@ public class RecyclerViewDemoActivity
 
         checkPastEvents(items);
 
+        // Read from file if exists
+        readFromFile();
+    }
+
+    private void readFromFile(){
 
 
+        // For now only processes one TaskModel
+        FileInputStream fin = null;
+        try{
+            fin = mContext.getApplicationContext().openFileInput("TaskList");
+
+            String result="";
+            int content;
+            while ((content = fin.read()) != -1) {
+                // convert to char and display it
+                result = result + Character.toString((char) content);
+            }
+
+            // Split all contents by newline character
+            String[] split;
+            split = result.split("\\n");
+            fin.close();
+
+            // Get string size for debug
+            System.out.println("No. of split elements:  " + split.length);
+            System.out.println("No. of loops:: " + split.length/8);
+
+            // Create model for contents
+            for(int i=0; i<split.length/8; i++)
+            {
+                TaskModel model = new TaskModel();
+
+                model.label = split[0+i*8];
+                model.description = split[1+i*8];
+                model.duration = Long.valueOf(split[2+i*8]);
+                model.id = Integer.parseInt(split[3+i*8]);
+                try{
+                    DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                    Date deadlineDate = format.parse(split[4+i*8]);
+                    model.deadline = deadlineDate;
+                } catch (ParseException e){
+                    e.printStackTrace();
+                }
+                model.priority = Integer.parseInt(split[5+i*8]);
+                try{
+                    DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                    Date beginDate = format.parse(split[6+i*8]);
+                    model.begin = beginDate;
+                } catch (ParseException e){
+                    e.printStackTrace();
+                }
+                try{
+                    DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                    Date endDate = format.parse(split[7+i*8]);
+                    model.end = endDate;
+                } catch (ParseException e){
+                    e.printStackTrace();
+                }
+                RecyclerViewDemoApp.addItemToList(model);
+                adapter.addData(model, 0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (fin != null)
+                    fin.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     private void checkPastEvents(List<TaskModel> items)
@@ -175,6 +237,7 @@ public class RecyclerViewDemoActivity
         }
         return true;
     }
+
     public static void addItemToList(TaskModel model) {
         //TaskModel model = new TaskModel();
         //model.label = "New Task " + itemCount;
@@ -189,10 +252,36 @@ public class RecyclerViewDemoActivity
         RecyclerViewDemoApp.addItemToList(model);
         adapter.addData(model, position);
 
+        // After adding to adapter, also add to file
+        try{
+            FileOutputStream fos = mContext.getApplicationContext().openFileOutput("TaskList", Context.MODE_APPEND);
+
+            // Writing TaskModel's attributes separated by newlines
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"),8192);
+            bw.write(model.label);
             bw.write("\n");
+            bw.write(model.description);
             bw.write("\n");
+            bw.write(String.valueOf(model.duration));
             bw.write("\n");
+            bw.write(String.valueOf(model.id));
             bw.write("\n");
+            bw.write(model.deadline.toString());
+            bw.write("\n");
+            bw.write(String.valueOf(model.priority));
+            bw.write("\n");
+            bw.write(model.begin.toString());
+            bw.write("\n");
+            bw.write(model.end.toString());
+            bw.write("\n");
+
+            bw.close();
+            fos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /*private void removeItemFromList() {
