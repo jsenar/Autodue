@@ -50,10 +50,10 @@ public class EventPopUp extends Activity{
     }
     // adds event
     public void addEvent(View view){
-        RecyclerViewDemoActivity.addItemToList(new TaskModel(TaskScreen.demo));
-        TaskModel a = createEvent(TaskScreen.demo, getContentResolver());
 
-        RecyclerViewDemoActivity.items.add(new TaskModel(a));
+        TaskModel a = createEvent(new TaskModel(TaskScreen.demo), getContentResolver());
+        RecyclerViewDemoActivity.addItemToList(a);
+        //RecyclerViewDemoActivity.items.add(new TaskModel(a));
         finishPopup(view);
     }
     public static TaskModel createEvent(TaskModel task, ContentResolver cr){
@@ -79,12 +79,17 @@ public class EventPopUp extends Activity{
         return task;
     }
     public static void deleteEvent(TaskModel task, ContentResolver cr){
+
+        if(task.eventID == null)
+            return;
+        Calendar.delete(task);
         Long eventId = task.eventID;
         //ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
         Uri deleteUri = null;
         deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
         int rows = cr.delete(deleteUri,null,null);
+
 
     }
 }

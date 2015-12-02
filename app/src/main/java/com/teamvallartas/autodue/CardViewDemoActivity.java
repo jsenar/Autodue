@@ -48,6 +48,7 @@ public class CardViewDemoActivity extends Activity {
         TextView labelDuration = (TextView) cardView.findViewById(R.id.txt_duration);
         TextView labelPriority = (TextView) cardView.findViewById(R.id.txt_priority);
         ImageView colorIndicator = (ImageView) cardView.findViewById(R.id.color_indicator);
+        TextView labelEvent = (TextView) cardView.findViewById(R.id.txt_event);
 
         // Set task title and description
         label.setText(model.label);
@@ -57,11 +58,13 @@ public class CardViewDemoActivity extends Activity {
         DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
         String dateAndHours = df.format(model.deadline);
 
-        String dateStr = DateUtils.formatDateTime(
-                this,
-                model.deadline.getTime(),
-                DateUtils.FORMAT_ABBREV_ALL);
-
+//        String dateStr = DateUtils.formatDateTime(
+//                this,
+//                model.deadline.getTime(),
+//                DateUtils.FORMAT_ABBREV_ALL);
+        String eventStr = "Event: "+ df.format(model.begin)+" - "+
+                df.format(model.end);
+        labelEvent.setText(eventStr);
         long millis = System.currentTimeMillis();
         int hoursLeft = (int) ((model.deadline.getTime() - millis)/(1000*60*60));
 

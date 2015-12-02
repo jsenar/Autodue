@@ -3,6 +3,7 @@ package com.teamvallartas.autodue;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -74,7 +75,7 @@ public class TaskScreen extends Activity {
     public void addTask(View view) throws ParseException {
         //Button button = (Button) findViewById(R.id.button1);
         demo = new TaskModel();
-
+        System.out.println(demo.id);
         // Check name is filled
         demo.label = "";
         demo.label += ((EditText)findViewById(R.id.task_name_message)).getText().toString();
@@ -122,6 +123,7 @@ public class TaskScreen extends Activity {
         System.out.println(dateAndTime);
         Date dDate = df.parse(dateAndTime);
         demo.deadline = dDate;
+        System.out.println(dDate);
 
         // Check error if duration exceeds difference between current time and end time
         Date currentTime = new Date();
@@ -146,42 +148,71 @@ public class TaskScreen extends Activity {
             default: demo.priority = 1;break;
         }
         // find time for event
+        RecyclerViewDemoActivity.items.add(new TaskModel(demo));
+        Collections.sort(RecyclerViewDemoActivity.items);
+        ContentResolver cr = getContentResolver();
         for(TaskModel task:RecyclerViewDemoActivity.items){
             if(!task.locked){
                 // delete the event from calendar
-                EventPopUp.deleteEvent(task, getContentResolver());
+                EventPopUp.deleteEvent(task, cr);
 
             }
         }
-        Event e,temp;
-        e = new Event(new Date(), new Date(), "");
-        // readd all events
-        RecyclerViewDemoActivity.items.add(new TaskModel(demo));
-        Collections.sort(RecyclerViewDemoActivity.items);
-        for(TaskModel task:RecyclerViewDemoActivity.items){
+        Event e;
+        Date now = new Date();
+        e = new Event(now, now, "");
+        // read all events
 
-            temp = Calendar.findTime(task);
+        TaskModel task;
+        //for(TaskModel task:RecyclerViewDemoActivity.items){
+        for(int i = 0; i< RecyclerViewDemoActivity.items.size(); i++){
+            task = RecyclerViewDemoActivity.items.get(i);
+            Event temp = Calendar.findTime(task);
             if(temp == null){
-                Toast.makeText(getApplicationContext(),"Uh oh." , 1500).show();
+                Toast.makeText(getApplicationContext(),"Cannot Find Time for "+task.label , 1500).show();
+                // for now removes it if it doesnt fit in schedule
+                //// TODO: 11/25/2015 please solve this later
+                RecyclerViewDemoActivity.items.remove(i);
+                return;
             }
-            task.begin = temp.getStartTime();
-            task.end = temp.getEndTime();
-            if(demo.id == task.id){
-                e = temp;
-            }
-            EventPopUp.createEvent(task, getContentResolver());
 
+//            if(demo.id == task.id){
+//                //e = temp;
+//                System.out.println(temp.getStartTime());
+//                System.out.println(temp.getEndTime());
+//                //e.setStartingTime(temp.getStartTime().getTime());
+//                e.startTime = temp.startTime;
+//                e.endTime = temp.endTime;
+//                //e.setEndingTime(temp.getEndTime().getTime());
+//                RecyclerViewDemoActivity.items.remove(i);
+//                i--;
+//                continue;
+//            }
+            Calendar.insert(temp);
+            task.begin = new Date(temp.startTime.getTime());
+            task.end = new Date(temp.endTime.getTime());
+            RecyclerViewDemoActivity.items.set(i, EventPopUp.createEvent(task, cr));
+
+        }
+        for(int i = 0; i< RecyclerViewDemoActivity.items.size(); i++) {
+            task = RecyclerViewDemoActivity.items.get(i);
+            if(demo.id == task.id) {
+                e.startTime = task.begin;
+                e.endTime = task.end;
+                RecyclerViewDemoActivity.items.remove(i);
+                EventPopUp.deleteEvent(task, cr);
+            }
         }
         //Event e = Calendar.findTime(demo);
-        if(e == null){
+        if(e.getStartTime().equals(e.getEndTime()) && e.getStartTime().equals(now)){
             Log.d("", "is null");
             Toast.makeText(getApplicationContext(),"Conflict detected." , 1500).show();
             return;
         }
         else
         {
-            demo.begin = e.getStartTime();
-            demo.end = e.getEndTime();
+            demo.begin = e.startTime;
+            demo.end = e.endTime;
         }
 
         //Log.d("", );

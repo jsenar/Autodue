@@ -33,9 +33,7 @@ public class TaskModel implements Comparable<TaskModel> {
 
     }
     public int compareTo(TaskModel other) {
-        if(id == other.id){
-            return 0;
-        }
+
         if(this.getDeadline().equals(other.getDeadline())) {
             // Sort priority descending if due time is same
             return(this.priority<other.getPriority()?1:-1);
