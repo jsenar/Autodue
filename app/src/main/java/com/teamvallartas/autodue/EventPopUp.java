@@ -36,7 +36,14 @@ public class EventPopUp extends Activity{
         getWindow().setLayout((int) (width), (int) (height));
         ((TextView)findViewById(R.id.EventName)).setText(TaskScreen.demo.label);
         ((TextView)findViewById(R.id.EventDescription)).setText(TaskScreen.demo.description);
-        DateFormat df = new SimpleDateFormat("MMM dd yyyy HH:mm");
+        long d = Long.valueOf(TaskScreen.demo.duration);
+        String hourText = "";
+        switch((int)d/3600000){
+            case 1: hourText = "hour"; break;
+            default: hourText = "hours"; break;
+        }
+        ((TextView) findViewById(R.id.DurationString)).setText(String.valueOf(d/3600000) + " " + hourText);
+        DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
 
         ((TextView) findViewById(R.id.TimeString)).setText(df.format(TaskScreen.demo.begin) + " - " + df.format(TaskScreen.demo.end));
     }

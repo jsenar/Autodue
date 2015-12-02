@@ -157,6 +157,8 @@ public class RecyclerViewDemoActivity
             AlarmManager manager=(AlarmManager)getSystemService(Activity.ALARM_SERVICE);
             PendingIntent pendingIntent= PendingIntent.getService(this.getApplicationContext(), 0, intent, 0);
             manager.set(AlarmManager.RTC,m.end.getTime(),pendingIntent);
+        } else {
+            System.out.println("No notifications to show");
         }
     }
 
@@ -270,7 +272,7 @@ public class RecyclerViewDemoActivity
         position++;
         //getCalendarEvents();
         RecyclerViewDemoApp.addItemToList(model);
-        adapter.addData(model, position);
+        adapter.addData(model,0);
 
         // After adding to adapter, also add to file
         addToFile(model);

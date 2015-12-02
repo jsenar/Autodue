@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Timeslot found"
+        android:text="Timeslot found:"
         android:id="@+id/success_text"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -77,16 +77,15 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Event time:"
-        android:id="@+id/timestring_text"
+        android:text="Duration Text"
+        android:id="@+id/DurationString"
         android:layout_below="@+id/EventDescription"
-        android:textSize="18sp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"/>
+        android:textSize="22sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -94,10 +93,11 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/TimeString"
-        android:layout_below="@+id/timestring_text"
-        android:textSize="18sp"
+        android:layout_below="@+id/DurationString"
+        android:textSize="22sp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -105,7 +105,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Generate event?"
         android:id="@+id/generate_text"
-        android:layout_below="@+id/TimeString"
+        android:layout_below="@+id/DurationString"
         android:textSize="18sp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
