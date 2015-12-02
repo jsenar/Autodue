@@ -53,10 +53,6 @@ public class TaskScreen extends Activity {
             EditText editDescription = (EditText) findViewById(R.id.description_name_message);
             editDescription.setText(CardViewDemoActivity.rescheduleModel.description);
 
-//            EditText editDuration = (EditText) findViewById(R.id.duration_time);
-//            long d = CardViewDemoActivity.rescheduleModel.duration/3600000;
-//            editDuration.setText(String.valueOf(d));
-
             // Reset this so that when you click FAB as usual you won't get previous cancelled values
             CardViewDemoActivity.rescheduleModel = new TaskModel();
         }
