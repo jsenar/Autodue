@@ -2,6 +2,7 @@ package com.teamvallartas.autodue;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -101,6 +102,8 @@ public class CardViewDemoActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         int id = extras.getInt(Constants.KEY_ID);
         TaskModel model = RecyclerViewDemoApp.findById(id);
+        ContentResolver cr = getContentResolver();
+        EventPopUp.deleteEvent(model,cr);
 
         RecyclerViewDemoActivity.removeItemFromListUsingObject(model);
 
