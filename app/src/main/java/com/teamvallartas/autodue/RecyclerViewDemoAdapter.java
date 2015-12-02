@@ -54,6 +54,7 @@ public class RecyclerViewDemoAdapter
         items.add(position, newModelData);
         demoQueue.add(newModelData);
         notifyItemInserted(position);
+        notifyDataSetChanged();
     }
 
     public void sort(){
@@ -156,14 +157,6 @@ public class RecyclerViewDemoAdapter
 
     public int getSelectedItemCount() {
         return selectedItems.size();
-    }
-
-    public List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList<Integer>(selectedItems.size());
-        for (int i = 0; i < selectedItems.size(); i++) {
-            items.add(selectedItems.keyAt(i));
-        }
-        return items;
     }
 
     // For updating file when items are deleted

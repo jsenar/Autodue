@@ -33,26 +33,8 @@ public class RecyclerViewDemoApp extends Application {
     public void onCreate() {
         super.onCreate();
         JodaTimeAndroid.init(this);
-        Random r = new Random();
         demoData = new ArrayList<TaskModel>();
         demoMap = new SparseArray<TaskModel>();
-//        for (int i = 0; i < 20; i++) {
-//            TaskModel model = new TaskModel();
-//            DateTime dateTime = new DateTime();
-//            dateTime = dateTime.plusDays(r.nextInt(15)-1);
-//            dateTime = dateTime.plusMillis(r.nextInt(36000000));
-//            model.deadline = dateTime.toDate();
-//
-//            String s[] = {"Finish homework", "Work on project", "Do lab exercise", "Type up proposal", "Group meeting", "Study for exams", "Work on coding project"};
-//            model.description = "Work on parts 1 and 2";
-//            model.label = s[r.nextInt(s.length)];
-//            model.duration = (r.nextInt(10)+1)*3600000;
-//            model.priority = r.nextInt(3)+1;
-//
-//            demoData.add(model);
-//            demoMap.put(model.id, model);
-//            demoQueue.add(model); // NEW
-//        }
     }
 
     public static final List<TaskModel> getDemoData() {
@@ -73,12 +55,6 @@ public class RecyclerViewDemoApp extends Application {
         return new ArrayList<TaskModel>(demoQueue);
     }
 
-
-    //public static final List<TaskModel> removeItemFromList(int position) {
-        //demoData.remove(position);
-        //demoMap.remove(demoData.get(position).id);
-        //return new ArrayList<TaskModel>(demoData);
-    //}
 
     public static TaskModel findById(int id) {
         return demoMap.get(id);

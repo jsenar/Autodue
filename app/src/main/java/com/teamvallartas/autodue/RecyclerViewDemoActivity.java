@@ -38,6 +38,8 @@ import android.widget.Toast;
 
 import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -64,6 +66,7 @@ public class RecyclerViewDemoActivity
     private ArrayAdapter<String> mAdapter;
     com.teamvallartas.autodue.Calendar myCalendar;
     static RecyclerView recyclerView;
+    static TextView emptyView;
     static RecyclerViewDemoAdapter adapter;
     static List<TaskModel> items;
     static int itemCount;
@@ -144,6 +147,24 @@ public class RecyclerViewDemoActivity
 
         // Make notifications
         checkNotification();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        emptyView = (TextView) findViewById(R.id.empty_view);
+//        System.out.println("Adapter size is: " + adapter.getSize());
+        if(adapter.getSize() > 0) {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
     }
 
     // Notification
@@ -172,7 +193,6 @@ public class RecyclerViewDemoActivity
             String result="";
             int content;
             while ((content = fin.read()) != -1) {
-                // convert to char and display it
                 result = result + Character.toString((char) content);
             }
 
@@ -180,10 +200,6 @@ public class RecyclerViewDemoActivity
             String[] split;
             split = result.split("\\n");
             fin.close();
-
-            // Get string size for debug
-//            System.out.println("No. of split elements:  " + split.length);
-//            System.out.println("No. of loops:: " + split.length/8);
 
             // Create model for contents
             for(int i=0; i<split.length/8; i++)
@@ -261,22 +277,16 @@ public class RecyclerViewDemoActivity
     }
 
     public static void addItemToList(TaskModel model) {
-        //TaskModel model = new TaskModel();
-        //model.label = "New Task " + itemCount;
         itemCount++;
         int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).
                 findFirstVisibleItemPosition();
-        // needed to be able to show the animation
-        // otherwise the view would be inserted before the first
-        // visible item; that is outside of the viewable area
+
         position++;
-        //getCalendarEvents();
         RecyclerViewDemoApp.addItemToList(model);
         adapter.addData(model,0);
 
         // After adding to adapter, also add to file
         addToFile(model);
-
     }
 
     // Appends to file the model that is input as parameter
@@ -314,13 +324,6 @@ public class RecyclerViewDemoActivity
 
     }
 
-    /*private void removeItemFromList() {
-        int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).
-                findFirstCompletelyVisibleItemPosition();
-        RecyclerViewDemoApp.removeItemFromList(position);
-        adapter.removeData(position);
-    }*/
-
     // Asides from removing from adapter, also updates file
     public static void removeItemFromListUsingObject(TaskModel model){
         adapter.removeDataUsingObject(model);
@@ -356,11 +359,6 @@ public class RecyclerViewDemoActivity
             getCalendarEvents();
             startActivity(new Intent(RecyclerViewDemoActivity.this, TaskScreen.class));
 
-
-            //new Intent(RecyclerViewDemoActivity.this, TaskScreen.class);
-            //onShowPopup(view);
-
-            //addItemToList();
         } else if (view.getId() == R.id.container_list_item) {
             // item click
             int idx = recyclerView.getChildPosition(view);
@@ -379,22 +377,7 @@ public class RecyclerViewDemoActivity
             this.startActivity(startIntent, options.toBundle());
         }
     }
-//    public void onShowPopup(View v){
-//        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        final View inflatedView = layoutInflater.inflate(R.layout.taskpopup, null, false);
-//        Display display = getWindowManager().getDefaultDisplay();
-//        final Point size = new Point();
-//        display.getSize(size);
-//        int mDeviceHeight = size.y;
-//        popOver = new PopupWindow(inflatedView, size.x - 50,size.y - 400, true );
-//        popOver.setBackgroundDrawable(getResources().getDrawable(R.drawable.popover_background));
-//        popOver.setFocusable(true);
-//        // make it outside touchable to dismiss the popup window
-//        popOver.setOutsideTouchable(true);
-//        popOver.showAtLocation(v, Gravity.BOTTOM, 0, 200);
-//
-//
-//    }
+
     private void myToggleSelection(int idx) {
         adapter.toggleSelection(idx);
         String title = getString(R.string.selected_count, adapter.getSelectedItemCount());

@@ -59,10 +59,6 @@ public class CardViewDemoActivity extends Activity {
         DateFormat df = new SimpleDateFormat("MMM dd HH:mm");
         String dateAndHours = df.format(model.deadline);
 
-//        String dateStr = DateUtils.formatDateTime(
-//                this,
-//                model.deadline.getTime(),
-//                DateUtils.FORMAT_ABBREV_ALL);
         String eventStr = "Event: "+ df.format(model.begin)+" - "+
                 df.format(model.end);
         labelEvent.setText(eventStr);
