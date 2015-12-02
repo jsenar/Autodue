@@ -3,6 +3,8 @@ package com.teamvallartas.autodue;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -139,10 +141,26 @@ public class RecyclerViewDemoActivity
 
         // Read from file if exists
         readFromFile();
+
+        // Make notifications
+        setNotification();
+    }
+
+    // Notification
+    public void setNotification()
+    {
+        if(adapter.getSize()!=0)
+        {
+            TaskModel m = adapter.getItem(0);
+            NotificationClass.dueTask = m.label;
+            Intent intent=new Intent(this,NotificationClass.class);
+            AlarmManager manager=(AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+            PendingIntent pendingIntent= PendingIntent.getService(this.getApplicationContext(), 0, intent, 0);
+            manager.set(AlarmManager.RTC,m.end.getTime(),pendingIntent);
+        }
     }
 
     private void readFromFile(){
-
 
         // For now only processes one TaskModel
         FileInputStream fin = null;
