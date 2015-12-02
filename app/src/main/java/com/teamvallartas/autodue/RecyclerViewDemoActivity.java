@@ -121,7 +121,7 @@ public class RecyclerViewDemoActivity
         View fab = findViewById(R.id.fab_add);
         fab.setOnClickListener(this);
 
-        myCalendar = new com.teamvallartas.autodue.Calendar();
+        myCalendar = new com.teamvallartas.autodue.Calendar(this.getApplicationContext());
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
 

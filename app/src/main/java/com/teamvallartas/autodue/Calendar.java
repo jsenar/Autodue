@@ -1,14 +1,30 @@
 package com.teamvallartas.autodue;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.grokkingandroid.samplesapp.samples.recyclerviewdemo.R;
 
 import java.util.*;
 public class Calendar{
 	// Internal storage of events
 	public static ArrayList<Event> myCalendar;
 	private static int startHr, startMin, endHr, endMin;
-	public Calendar(){
+	public static final String OfflinePREFERENCES = "MyPrefs" ;
+	public static final String StartHr = "StartHr";
+	public static final String StartMin = "StartMin";
+	public static final String EndHr = "EndHour";
+	public static final String EndMin = "EndMin";
+
+	public Calendar(Context context){
 		myCalendar = new ArrayList<Event>();
+		SharedPreferences prefs = context.getSharedPreferences(OfflinePREFERENCES, context.MODE_PRIVATE);
+		startHr = prefs.getInt(StartHr, 0);
+		startMin = prefs.getInt(StartMin, 0);
+		endHr = prefs.getInt(EndHr, 0);
+		endMin = prefs.getInt(EndMin, 0);
 	}
 
 	// adds an event then sorts it
@@ -108,11 +124,22 @@ public class Calendar{
 			iter = myCalendar.get(i);
 			possibleTime.setStartingTime(iter.getEndTime().getTime() + 1);
 			possibleTime.setEndingTime(iter.getEndTime().getTime() + length);
-			if (possibleTime.getStartTime().getHours() >= startHr && possibleTime.getStartTime().getHours() <= endHr){
+			//Check that possible time doesn't overlap off-limit times and move it accordingly
+			if (checkOverlap(startHr, endHr, possibleTime)){
 				possibleTime.getStartTime().setHours(endHr);
 				possibleTime.getEndTime().setHours(endHr + possibleTime.getDuration());
 			}
 		}
 		return possibleTime;
-}
 	}
+
+	@SuppressWarnings("deprecation")
+	private static boolean checkOverlap(int startHr, int endHr, Event time){
+		//checks if start time or end time are within the off-limit hours
+		if((time.getStartTime().getHours() >= startHr && time.getStartTime().getHours() <= endHr)
+			&& (time.getEndTime().getHours() >= startHr && time.getEndTime().getHours() <= endHr)){
+			return true;
+		}
+		return false;
+	}
+}
