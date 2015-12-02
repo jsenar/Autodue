@@ -149,7 +149,7 @@ public class RecyclerViewDemoActivity
     // Notification
     public void checkNotification()
     {
-        if(adapter.getSize()!=0)
+        if(adapter.getSize()>0)
         {
             TaskModel m = adapter.getItem(0);
             NotificationClass.dueTask = m.label;
