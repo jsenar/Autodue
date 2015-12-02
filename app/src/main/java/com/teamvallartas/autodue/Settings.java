@@ -42,7 +42,7 @@ public class Settings extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width), (int) (height * 0.80));
+        getWindow().setLayout((int) (width), (int) (height));
         getOffLimit();
     }
 

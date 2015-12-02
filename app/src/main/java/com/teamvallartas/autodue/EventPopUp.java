@@ -36,7 +36,7 @@ public class EventPopUp extends Activity{
         getWindow().setLayout((int) (width), (int) (height));
         ((TextView)findViewById(R.id.EventName)).setText(TaskScreen.demo.label);
         ((TextView)findViewById(R.id.EventDescription)).setText(TaskScreen.demo.description);
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat df = new SimpleDateFormat("MMM dd yyyy HH:mm");
 
         ((TextView) findViewById(R.id.TimeString)).setText(df.format(TaskScreen.demo.begin) + " - " + df.format(TaskScreen.demo.end));
     }
