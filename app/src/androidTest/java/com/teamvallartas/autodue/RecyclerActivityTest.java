@@ -4,6 +4,8 @@ package com.teamvallartas.autodue;
  * Created by billyandika on 12/4/15.
  * Edited by John Senar
  */
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
@@ -21,16 +23,22 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-
+import static org.hamcrest.core.IsNull.notNullValue;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.is;
+
 
 @RunWith(AndroidJUnit4.class)
 public class RecyclerActivityTest {
@@ -40,11 +48,31 @@ public class RecyclerActivityTest {
     public ActivityTestRule<RecyclerViewDemoActivity> mActivityRule =
             new ActivityTestRule<>(RecyclerViewDemoActivity.class);
 
+    private void pauseTestFor(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
-    public void ensureCancelWorksNoDataEntered() {
-        //Given a user clicks add task and doesn't input any info
+    public void ensureCancelWorksDataEntered() {
+
+        //Given a user clicks add task and inputs information
         onView(withId(R.id.fab_add)).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.task_name_message)).perform(typeText("Do lab work"), closeSoftKeyboard());
+        pauseTestFor(500);
+        onView(withId(R.id.description_name_message)).perform(typeText("Parts 1 and 2"), closeSoftKeyboard());
+        pauseTestFor(500);
+        onView(withId(R.id.duration_time)).perform(typeText("2"), closeSoftKeyboard());
+        pauseTestFor(500);
+        onView(withId(R.id.duedate)).perform(replaceText("12/25/2015"));
+        pauseTestFor(500);
+        onView(withId(R.id.duetime_hour)).perform(replaceText("15:00"));
+        pauseTestFor(500);
+
         //When they hit the cancel button
         onView(withId(R.id.cancelButton)).perform(click());
         //No task is created and they go back to the task list screen
@@ -54,9 +82,21 @@ public class RecyclerActivityTest {
     }
 
     @Test
-    public void ensureDoneWorksNoDataEntered() {
-        //Given a user clicks add task and doesn't input any info
+         public void ensureDoneWorksNoDataEntered() {
+        //Given a user clicks add task and inputs information
         onView(withId(R.id.fab_add)).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.task_name_message)).perform(typeText("Do lab work"), closeSoftKeyboard());
+        pauseTestFor(500);
+        onView(withId(R.id.description_name_message)).perform(typeText("Parts 1 and 2"), closeSoftKeyboard());
+        pauseTestFor(500);
+        onView(withId(R.id.duration_time)).perform(typeText("1"), closeSoftKeyboard());
+        pauseTestFor(500);
+        onView(withId(R.id.duedate)).perform(replaceText("12/25/2015"));
+        pauseTestFor(500);
+        onView(withId(R.id.duetime_hour)).perform(replaceText("15:00"));
+        pauseTestFor(500);
+
         //When they hit the done button
         onView(withId(R.id.doneButton)).perform(click());
         //No task is created and they stay on the add task screen
@@ -65,16 +105,8 @@ public class RecyclerActivityTest {
         //Checks if done button is still displayed since it's on the add task screen
 
     }
-//    @Test
-//    public void changeText_newActivity() {
-//        // Type text and then press the button.
-//        onView(withId(R.id.inputField)).perform(typeText("NewText"),
-//                closeSoftKeyboard());
-//        onView(withId(R.id.switchActivity)).perform(click());
-//
-//        // This view is in a different Activity, no need to tell Espresso.
-//        onView(withId(R.id.resultView)).check(matches(withText("NewText")));
-//    }
+
+
 }
 
 
