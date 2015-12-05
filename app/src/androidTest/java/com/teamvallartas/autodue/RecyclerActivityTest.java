@@ -75,7 +75,7 @@ public class RecyclerActivityTest {
 
         //When they hit the cancel button
         onView(withId(R.id.cancelButton)).perform(click());
-        //No task is created and they go back to the task list screen
+        //Then no task is created and they go back to the task list screen
         onView(withId(R.id.fab_add)).check(matches(isDisplayed()));
 
         //Checks if add button is displayed since it is on the task list screen
@@ -100,10 +100,8 @@ public class RecyclerActivityTest {
         //When they hit the done button
         onView(withId(R.id.doneButton)).perform(click());
         pauseTestFor(500);
-        onView(withId(R.id.doneButton)).perform(click());
-        pauseTestFor(500);
 
-        //The user is given the option to generate an event
+        //Then user is given the option to generate an event
         //Checks if the generate button is displayed
         onView(withId(R.id.generate_button)).check(matches(isDisplayed()));
 
@@ -121,7 +119,7 @@ public class RecyclerActivityTest {
 
         //When they hit the done button
         onView(withId(R.id.doneButton)).perform(click());
-        //The app stays on the add task page and no task is created
+        //Then app stays on the add task page and no task is created
         onView(withId(R.id.doneButton)).check(matches(isDisplayed()));
 
         //Checks if the done button is still displayed
