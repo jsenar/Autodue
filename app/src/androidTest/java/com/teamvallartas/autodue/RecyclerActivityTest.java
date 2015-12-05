@@ -99,10 +99,10 @@ public class RecyclerActivityTest {
 
         //When they hit the done button
         onView(withId(R.id.doneButton)).perform(click());
-        //No task is created and they stay on the add task screen
-        onView(withId(R.id.doneButton)).check(matches(isDisplayed()));
+        //The user is given the option to generate an event
+        onView(withId(R.id.generate_button)).check(matches(isDisplayed()));
 
-        //Checks if done button is still displayed since it's on the add task screen
+        //Checks if the generate button is displayed
 
     }
 
