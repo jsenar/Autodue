@@ -111,16 +111,7 @@ public class RecyclerActivityTest {
         //Given a user clicks add task and inputs no information
         onView(withId(R.id.fab_add)).perform(click());
         pauseTestFor(500);
-        onView(withId(R.id.task_name_message)).perform(typeText("Do lab work"), closeSoftKeyboard());
-        pauseTestFor(500);
-        onView(withId(R.id.description_name_message)).perform(typeText("Parts 1 and 2"), closeSoftKeyboard());
-        pauseTestFor(500);
-        onView(withId(R.id.duration_time)).perform(typeText("1"), closeSoftKeyboard());
-        pauseTestFor(500);
-        onView(withId(R.id.duedate)).perform(replaceText("12/25/2015"));
-        pauseTestFor(500);
-        onView(withId(R.id.duetime_hour)).perform(replaceText("15:00"));
-        pauseTestFor(500);
+
 
         //When they hit the done button
         onView(withId(R.id.doneButton)).perform(click());
