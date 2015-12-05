@@ -140,4 +140,11 @@ public class Settings extends Activity {
         return str_hour+":"+str_min;
     }
 
+    public void setOffLimitTimeForTesting(int sh, int sm, int eh, int em) {
+        starthr = sh;
+        startmin = sm;
+        endhr = eh;
+        endmin = em;
+    }
+
 }

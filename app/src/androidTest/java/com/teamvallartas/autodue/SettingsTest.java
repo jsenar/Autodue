@@ -55,13 +55,17 @@ public class SettingsTest {
         pauseTestFor(500);
         onView(withId(R.id.endtime)).perform(replaceText("09:00"));
         pauseTestFor(500);
+        mActivityRule.getActivity().setOffLimitTimeForTesting(1,0,9,0);
+        pauseTestFor(500);
         onView(withId(R.id.set_button)).perform(click());
         pauseTestFor(500);
+
+        //mActivityRule.getActivity().setOffLimitTimeForTesting(1,0,9,0);
     }
     @Test
     public void ensureOffLimitTimesPreserved() {
         // The app stores that information and reflects it the next time
-        pauseTestFor(1000);
+        pauseTestFor(2000);
         onView(withId(R.id.current_offlimit_time)).check(matches(withText(" 01:00 - 09:00")));
     }
 }
