@@ -68,9 +68,9 @@ public class RecyclerActivityTest {
         pauseTestFor(500);
         onView(withId(R.id.duration_time)).perform(typeText("2"), closeSoftKeyboard());
         pauseTestFor(500);
-        onView(withId(R.id.duedate)).perform(replaceText("12/25/2015"));
+        onView(withId(R.id.duedate)).perform(replaceText("12/12/2015"));
         pauseTestFor(500);
-        onView(withId(R.id.duetime_hour)).perform(replaceText("15:00"));
+        onView(withId(R.id.duetime_hour)).perform(replaceText("00:00"));
         pauseTestFor(500);
 
         //When they hit the cancel button
@@ -82,7 +82,7 @@ public class RecyclerActivityTest {
     }
 
     @Test
-         public void ensureDoneWorksDataEntered() {
+    public void ensureDoneWorksDataEntered() {
         //Given a user clicks add task and inputs information
         onView(withId(R.id.fab_add)).perform(click());
         pauseTestFor(500);
@@ -92,18 +92,24 @@ public class RecyclerActivityTest {
         pauseTestFor(500);
         onView(withId(R.id.duration_time)).perform(typeText("1"), closeSoftKeyboard());
         pauseTestFor(500);
-        onView(withId(R.id.duedate)).perform(replaceText("12/25/2015"));
+        onView(withId(R.id.duedate)).perform(replaceText("12/12/2015"));
         pauseTestFor(500);
-        onView(withId(R.id.duetime_hour)).perform(replaceText("15:00"));
+        onView(withId(R.id.duetime_hour)).perform(replaceText("00:00"));
         pauseTestFor(500);
 
         //When they hit the done button
         onView(withId(R.id.doneButton)).perform(click());
+        pauseTestFor(500);
+        onView(withId(R.id.doneButton)).perform(click());
+        pauseTestFor(500);
+
         //The user is given the option to generate an event
+        //Checks if the generate button is displayed
         onView(withId(R.id.generate_button)).check(matches(isDisplayed()));
 
-        //Checks if the generate button is displayed
-
+        // Extra: generating the event should bring the user back to the main task screen
+        onView(withId(R.id.generate_button)).perform(click());
+        onView(withId(R.id.fab_add)).check(matches(isDisplayed()));
     }
 
     @Test
