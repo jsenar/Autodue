@@ -3,9 +3,6 @@ package com.teamvallartas.autodue;
 /**
  * Created by billyandika on 12/4/15.
  * Edited by John Senar
- * Given that a user clicks the add task button and doesn't fill out a task name,
- * when they click the done button, then a toast should pop up saying "Name must be specified"
- * and the user stays on the add task screen.
  */
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -29,7 +26,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 
 
 import static android.support.test.espresso.intent.Intents.intended;
@@ -43,20 +40,31 @@ public class RecyclerActivityTest {
     public ActivityTestRule<RecyclerViewDemoActivity> mActivityRule =
             new ActivityTestRule<>(RecyclerViewDemoActivity.class);
 
-    @Test
-    public void ensureDoneWorksNoDataEntered() {
-
-        onView(withId(R.id.fab_add)).perform(click());
-        onView(withId(R.id.doneButton)).perform(click());
-
-    }
 
     @Test
     public void ensureCancelWorksNoDataEntered() {
+        //Given a user clicks add task and doesn't input any info
         onView(withId(R.id.fab_add)).perform(click());
+        //When they hit the cancel button
         onView(withId(R.id.cancelButton)).perform(click());
+        //No task is created and they go back to the task list screen
+        onView(withId(R.id.fab_add)).check(matches(isDisplayed()));
+
+        //Checks if add button is displayed since it is on the task list screen
     }
 
+    @Test
+    public void ensureDoneWorksNoDataEntered() {
+        //Given a user clicks add task and doesn't input any info
+        onView(withId(R.id.fab_add)).perform(click());
+        //When they hit the done button
+        onView(withId(R.id.doneButton)).perform(click());
+        //No task is created and they stay on the add task screen
+        onView(withId(R.id.doneButton)).check(matches(isDisplayed()));
+
+        //Checks if done button is still displayed since it's on the add task screen
+
+    }
 //    @Test
 //    public void changeText_newActivity() {
 //        // Type text and then press the button.
