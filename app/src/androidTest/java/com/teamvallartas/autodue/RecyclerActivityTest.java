@@ -82,7 +82,7 @@ public class RecyclerActivityTest {
     }
 
     @Test
-         public void ensureDoneWorksNoDataEntered() {
+         public void ensureDoneWorksDataEntered() {
         //Given a user clicks add task and inputs information
         onView(withId(R.id.fab_add)).perform(click());
         pauseTestFor(500);
